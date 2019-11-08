@@ -37,6 +37,16 @@
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
 
+		<script>
+			(function() {
+				window.addEventListener('load', function() {
+					var forms = [document.getElementById('html_form')];
+					var validation = Array.prototype.filter.call(forms, function(form) {
+						form.addEventListener('submit', check, false);
+					});
+				}, false);
+			})();
+		</script>
     </div>
     </div>
 </div>
