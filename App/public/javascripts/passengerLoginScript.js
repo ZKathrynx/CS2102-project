@@ -10,6 +10,7 @@ function check(event) {
 		event.stopPropagation();
 		return false;
 	}
+	
 	if(password.length == 0) {
 		alert("Invalid password");
 		event.preventDefault();
