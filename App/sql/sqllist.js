@@ -20,8 +20,9 @@ module.exports = {
 	// check_username: 'SELECT * FROM Users where username = $1',
 	
 	// add_bookmark: 'INSERT INTO bookmarks (puname, pickup, dropoff) VALUES ($1, $2, $3)',
-	// userpass: 'SELECT username,password FROM users WHERE EXISTS (SELECT 1 FROM users WHERE username = $1 AND password = $2) WHERE username = $1 AND password = $2',
-	
+
+	userpass: 'SELECT username,password FROM users WHERE EXISTS (SELECT 1 FROM users WHERE username = $1 AND password = $2) WHERE username = $1 AND password = $2',
+
     // all_car: 'SELECT * FROM car',
     
     // //retrieve
