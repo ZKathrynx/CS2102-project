@@ -15,4 +15,4 @@ how to run:
 
 6. choose driver login / user login
 
-7. use the default user name "A" and password "passwordA" to log in
+7. use the default user id "1" and password "passwordA" to log in
