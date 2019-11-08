@@ -1,4 +1,4 @@
-var sql_query = require('../sql');
+var sql_query = require('../sql/sqllist.js');
 var express = require('express');
 var router = express.Router();
 
