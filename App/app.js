@@ -39,6 +39,21 @@ var passengerLoginRouter = require('./routes/passengerLogin');
 var registerUserRouter = require('./routes/registerUser');
 var registerCarRouter = require('./routes/registerCar');
 
+// TODO:
+// bindBankAccount
+// addValue
+// viewAccount
+
+// advertiseRide
+// viewAllEvaluation
+// viewBid
+
+// searchForRide
+// viewBidStatus
+// viewCurrentRide
+var viewAccountRouter = require('./routes/viewAccount')
+
+
 var app = express();
 
 // view engine setup
@@ -85,6 +100,20 @@ app.use('/driverLogin', driverLoginRouter);
 app.use('/passengerLogin', passengerLoginRouter);
 app.use('/registerUser', registerUserRouter);
 app.use('/registerCar', registerCarRouter);
+
+// TODO:
+// bindBankAccount
+// addValue
+// viewAccount
+
+// advertiseRide
+// viewAllEvaluation
+// viewBid
+
+// searchForRide
+// viewBidStatus
+// viewCurrentRide
+app.use('/viewAccount', viewAccountRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
