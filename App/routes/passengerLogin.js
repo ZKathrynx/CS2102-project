@@ -10,22 +10,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-// Retrieve Informationvar input_username = req.body.username;
-// 	var input_password = req.body.password;
-	
-// 	// Construct Specific SQL Query
-// 	var select_query = sql_query + "uid = " + input_password;
-	
-// 	pool.query(insert_query, (err, data) => {
-// 		res.redirect('/select')
-// 	});
-// });
-
-	var input_id = req.body.password;
+	var input_id = req.body.userId;
 	var input_password = req.body.password;
 	
 	// Construct Specific SQL Query
-	var insert_query = sql_query + "userId = " + input_id " AND " + "password = " + input_password;
+	var insert_query = sql_query + "userId = " + input_id + " AND " + "password = " + input_password;
 	
 	pool.query(insert_query, (err, data) => {
 		if (data.rows[0] == undefined) {
