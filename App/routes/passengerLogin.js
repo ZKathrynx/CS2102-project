@@ -29,7 +29,7 @@ router.post('/', function(req, res, next) {
 	
 	pool.query(insert_query, (err, data) => {
 		if (data.rows[0] == undefined) {
-			alert("I am an alert box!")
+			alert("Login failed! Invalid user ID or password.")
 		} else {
 			res.redirect('/passengerFunction');
 		}
