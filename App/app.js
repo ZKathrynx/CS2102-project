@@ -37,6 +37,7 @@ var driverFunctionsRouter = require('./routes/driverFunctions');
 var driverLoginRouter = require('./routes/driverLogin');
 var passengerLoginRouter = require('./routes/passengerLogin');
 var registerUserRouter = require('./routes/registerUser');
+var registerCarRouter = require('./routes/registerCar');
 
 var app = express();
 
@@ -83,6 +84,7 @@ app.use('/driverFunctions', driverFunctionsRouter);
 app.use('/driverLogin', driverLoginRouter);
 app.use('/passengerLogin', passengerLoginRouter);
 app.use('/registerUser', registerUserRouter);
+app.use('/registerCar', registerCarRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
