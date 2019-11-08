@@ -2,7 +2,7 @@
 <html>
   <head>
 		<!-- Page Title -->
-    <title>CS2102 Modifying Database</title>
+    <title>CS2102 Starter Guide</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 		
 		<!-- CSS for Styling -->
@@ -12,25 +12,32 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
-		<!-- ADDED JavaScript -->
-		<script src="javascripts/insertScript.js"></script>
   </head>
-  <body>
-    <h1>CS2102: <%= title%></h1>
-		<form id="html_form" action="insert" role="form" method="post">
-			<div class="form-group">
-				<label for="Username">Username</label>
-				<input type="text" class="form-control" id="username" name="username" aria-describedby="usernameHelp" placeholder="Enter your user name">
-			</div>
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input type="text" class="form-control" id="password" name="password" placeholder="Enter your password">
-				<small id="passwordHelp" class="form-text text-muted">Do not share your password with anyone else.</small>
-			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
-		
+  
+<div class="sidenav">
+    <div class="login-main-text">
+    <h2>Carpooling System</h2>
+    <h3>Group 35 <%= title%></h3>
+    <p>Login or register from here to access.</p>
+    </div>
+</div>
+
+<div class="main">
+    <div class="col-md-6 col-sm-12">
+    <div class="login-form">
+        <form action="/login" method="GET">
+            <div class="form-group">
+                <label>User Name</label>
+                <input type="uid" name="uid" class="form-control" id="uid" placeholder="User ID">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" onclick="window.location.href='/registerUser'" class="btn btn-secondary">No account? </button>
+        </form>
+
 		<script>
 			(function() {
 				window.addEventListener('load', function() {
@@ -41,5 +48,7 @@
 				}, false);
 			})();
 		</script>
-  </body>
+    </div>
+    </div>
+</div>
 </html>
