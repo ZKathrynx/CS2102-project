@@ -6,7 +6,7 @@ sql.query = {
 	//create
 	// all_rides: 'SELECT * FROM RIDES WHERE is_complete = FALSE',
 	// check_username: 'SELECT * FROM Users where username = $1',
-	add_user: 'INSERT INTO Users (uid, name, password, phone, balance) VALUES($1, $2, $3, $4, $5)',
+	add_user: 'INSERT INTO Users (uid, name, password, phone) VALUES($1, $2, $3, $4)',
 	// add_driver: 'INSERT INTO driver (username, name) VALUES ($1, $2)',
 	// add_passenger: 'INSERT INTO passenger (username, name) VALUES ($1, $2)',
 	// add_bid: 'INSERT INTO bids (puname, duname, pickup, dropoff, ride_date, start_time, amount) VALUES ($1,$2,$3,$4,$5,$6,$7)',
