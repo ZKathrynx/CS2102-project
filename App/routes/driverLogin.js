@@ -26,7 +26,7 @@ router.post('/', function(req, res, next) {
 	var input_password = req.body.password;
 	
 	
-	pool.query(sql_query.query.userpass,[input_userId, input_password], (err, data) => {
+	pool.query(sql_query.userpass,[input_userId, input_password], (err, data) => {
     if (data.rows[0] == undefined) {
       alert("Login failed! Invalid user ID or password")
     } else {

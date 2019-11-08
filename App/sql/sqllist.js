@@ -3,12 +3,17 @@ module.exports = {
 
     //create
     add_user: 'INSERT INTO Users (uid, name, password, phone) VALUES($1, $2, $3, $4)',
-    add_driver: 'INSERT INTO Drivers (uid) VALUES ($1)',
-    add_passenger: 'INSERT INTO Passengers (uid) VALUES ($1)',
-    add_bankaccount : 'INSERT INTO BankAccounts (bid, bname, balance)',
-    add_car: 'INSERT INTO Cars (platenumber, model, capacity) VALUES($1,$2,$3)',
-    add_bid: 'INSERT INTO bids (puname, duname, pickup, dropoff, ride_date, start_time, amount) VALUES ($1,$2,$3,$4,$5,$6,$7)',
-	add_ride: 'INSERT INTO rides (username, pickup, dropoff, ride_date, start_time, capacity) VALUES ($1,$2,$3,$4,$5,$6)',
+    add_driver: 'INSERT INTO Drivers VALUES ($1)',
+    add_passenger: 'INSERT INTO Passengers VALUES ($1)',
+    add_bankaccount: 'INSERT INTO BankAccounts VALUES ($1,$2)',
+    add_bind: 'INSERT INTO Binds VALUES ($1,$2)',
+    add_car: 'INSERT INTO Cars VALUES($1,$2,$3)',
+    add_own: 'INSERT INTO Owns VALUE($1,$2)',
+    add_bid: 'INSERT INTO Bids (did,pid,rdate,rtime,price) VALUES ($1,$2,$3,$4,$5)',
+    add_ride: 'INSERT INTO Rides VALUES ($1,$2,$3,$4,$5,$6)',
+    add_deal: 'INSERT INTO Deals (did,pid,rdate,rtime,atime) VALUES ($1,$2,$3,$4,$5)',
+    add_evaluate: 'INSERT INTO Evaluates VALUES ($1,$2.$3,$4,$5,$6,$7,$8)',
+    add_complain: 'INSERT INTO Complains VALUES ($1,$2,$3,$4,$5)',
     
     
     // all_rides: 'SELECT * FROM RIDES WHERE is_complete = FALSE',
@@ -53,7 +58,5 @@ module.exports = {
 	// individualRide: 'SELECT * FROM rides r,bids b WHERE r.pickup = $1 AND r.dropoff = $2 AND r.ride_date = $3  AND r.start_time = $4 AND r.username = $5 AND b.pickup = $1 AND b.dropoff = $2 AND b.ride_date = $3  AND b.start_time = $4 AND b.duname = $5 ORDER BY b.amount DESC',
 	// update_individual_bid: 'UPDATE bids SET is_win = \'TRUE\' WHERE b.pickup = $1 AND b.dropoff = $2 AND b.ride_date = $3  AND b.start_time = $4 AND b.duname = $5 AND b.puname = $6',
     // update_win_bid: 'WITH X AS (SELECT * FROM Bids b WHERE b.pickup = $1 AND b.dropoff = $2 AND b.ride_date = $3  AND b.start_time = $4 AND b.duname = $5 ORDER BY amount DESC LIMIT $6) UPDATE bids b SET is_win = \'TRUE\' FROM X WHERE b.puname = X.puname AND b.duname = X.duname AND b.pickup = X.pickup AND b.dropoff = X.dropoff AND b.start_time = X.start_time AND b.ride_date = X.ride_date' 
-    
-
 
 }
