@@ -25,7 +25,7 @@
 <div class="main">
     <div class="col-md-6 col-sm-12">
     <div class="login-form">
-        <form action="/login" method="GET">
+        <form id = 'login_form' action="/login" role="form" method="GET">
             <div class="form-group">
                 <label>Passenger ID</label>
                 <input type="text" name="userId" class="form-control" id="userId" placeholder="Enter your Passenger ID">
@@ -40,7 +40,7 @@
 		<script>
 			(function() {
 				window.addEventListener('load', function() {
-					var forms = [document.getElementById('html_form')];
+					var forms = [document.getElementById('login_form')];
 					var validation = Array.prototype.filter.call(forms, function(form) {
 						form.addEventListener('submit', check, false);
 					});
