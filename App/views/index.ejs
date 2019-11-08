@@ -14,46 +14,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>CS2102 Starter Guide</h1>
-    <p>Welcome to CS2102 Starter Guide</p><br />
-		<p>by: Adi Yoga S. Prabawa
+    <h1>Welcome page: <%= title%></h1>
+    <p>Welcome to Carpooling System</p>
   </body>
-
-<div class="sidenav">
-    <div class="login-main-text">
-    <h2>Carpooling System</h2>
-    <h3>Group 35 <%= title%></h3>
-    <p>Login or register from here to access.</p>
-    </div>
-</div>
-
-<div class="main">
-    <div class="col-md-6 col-sm-12">
-    <div class="login-form">
-        <form action="/login" method="GET">
-            <div class="form-group">
-                <label>User Name</label>
-                <input type="uid" name="uid" class="form-control" id="uid" placeholder="User ID">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="button" onclick="window.location.href='/registerUser'" class="btn btn-secondary">No account? </button>
-        </form>
-
-		<script>
-			(function() {
-				window.addEventListener('load', function() {
-					var forms = [document.getElementById('html_form')];
-					var validation = Array.prototype.filter.call(forms, function(form) {
-						form.addEventListener('submit', check, false);
-					});
-				}, false);
-			})();
-		</script>
-    </div>
-    </div>
-</div>
+  <button type="button" onclick="window.location.href='/passengerLogin'" class="btn btn-primary">Login As a Passenger</button>
+  <button type="button" onclick="window.location.href='/driverLogin'" class="btn btn-primary">Login As a Driver</button>
 </html>
