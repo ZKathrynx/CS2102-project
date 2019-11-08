@@ -13,12 +13,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
-  
+
 <div class="sidenav">
     <div class="login-main-text">
     <h2>Carpooling System</h2>
     <h3>Group 35 <%= title%></h3>
-    <p>Login or register from here to access.</p>
+    <p>Login from here to access.</p>
     </div>
 </div>
 
@@ -27,15 +27,14 @@
     <div class="login-form">
         <form action="/login" method="GET">
             <div class="form-group">
-                <label>User Name</label>
-                <input type="uid" name="uid" class="form-control" id="uid" placeholder="User ID">
+                <label>Passenger ID</label>
+                <input type="number" name="userId" class="form-control" id="userId" placeholder="Enter your Passenger ID">
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                <input type="password" name="password" class="form-control" id="password" placeholder="Enter your Password">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="button" onclick="window.location.href='/registerUser'" class="btn btn-secondary">No account? </button>
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
 
 		<script>
