@@ -20,7 +20,7 @@ const pool = new Pool({
 router.get('/', function(req, res, next) {
 	res.clearCookie("rdate", { httpOnly: true });
 	res.clearCookie("rtime", { httpOnly: true });
-	res.render('autoSelect', { title: 'Auto Select', data: data.rows });
+	res.render('autoSelect', { title: 'Auto Select'});
 });
 
 router.post('/', function(req, res, next) {
