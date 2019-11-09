@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cookieParser = require("cookie-parser");
+
 
 /* --- V7: Using dotenv     --- */
 require('dotenv').config();
@@ -39,6 +41,18 @@ var passengerLoginRouter = require('./routes/passengerLogin');
 var registerUserRouter = require('./routes/registerUser');
 var registerCarRouter = require('./routes/registerCar');
 var errorOccurRouter = require('./routes/errorOccur');
+var viewAllAvailableRidesRouter = require('./routes/viewAllAvailableRides');
+var bindBankAccountFromPassengerRouter = require('./routes/bindBankAccountFromPassenger');
+var bindBankAccountFromDriverRouter = require('./routes/bindBankAccountFromDriver');
+var viewBidStatusRouter = require('./routes/viewBidStatus');
+var viewCurrentDealRideRouter = require('./routes/viewCurrentDealRide');
+var viewDriverRankingRouter = require('./routes/viewDriverRanking');
+var viewEvaluationsRouter = require('./routes/viewEvaluations');
+var advertiseRideRouter = require('./routes/advertiseRide');
+var viewBidsRouter = require('./routes/viewBids');
+var complainRouter = require('./routes/complain');
+var evaluateRouter = require('./routes/evaluate');
+//var viewStartedRideRouter = require('./routes/viewStartedRide');
 // TODO:
 // bindBankAccount
 // addValue
@@ -104,6 +118,19 @@ app.use('/passengerLogin', passengerLoginRouter);
 app.use('/registerUser', registerUserRouter);
 app.use('/registerCar', registerCarRouter);
 app.use('/errorOccur', errorOccurRouter);
+app.use('/bindBankAccountFromDriver', bindBankAccountFromDriverRouter);
+app.use('/bindBankAccountFromPassenger', bindBankAccountFromPassengerRouter);
+app.use('/viewAllAvailableRides', viewAllAvailableRidesRouter);
+app.use('/viewBidStatus', viewBidStatusRouter);
+app.use('/viewCurrentDealRide', viewCurrentDealRideRouter);
+app.use('/viewDriverRanking', viewDriverRankingRouter);
+app.use('/viewEvaluations', viewEvaluationsRouter);
+app.use('/advertiseRide', advertiseRideRouter);
+app.use('/viewBids', viewBidsRouter);
+app.use('/complain', complainRouter);
+app.use('/evaluate', evaluateRouter);
+app.use(cookieParser());
+//app.use('/viewStartedRide', viewStartedRideRouter);
 // TODO:
 // bindBankAccount
 // addValue

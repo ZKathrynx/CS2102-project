@@ -18,6 +18,7 @@ const pool = new Pool({
 
 
 router.get('/', function(req, res, next) {
+	var pid = req.cookies["id"];
 	pool.query(sql_query.get_bids_passenger, [pid], (err, data) => {
 		res.render('viewBidStatus', { title: 'Database Connect', data: data.rows });
 	});

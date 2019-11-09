@@ -16,13 +16,13 @@ const pool = new Pool({
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('bindBankAccount', { title: 'Bind Bank Account' });
+  res.render('bindBankAccountFromDriver', { title: 'Bind Bank Account' });
 });
 
 router.post('/', function(req, res, next) {
 	var input_bId = req.body.bankId;
     var input_bname = req.body.bname;
-   
+   var input_userId = req.cookies["id"];
 	//balance: assign default value
     pool.query(sql_query.add_bankaccount,[input_bId, input_bname], (err, data) => {
 		if (err) {
