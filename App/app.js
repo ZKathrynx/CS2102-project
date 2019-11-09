@@ -39,6 +39,8 @@ var passengerLoginRouter = require('./routes/passengerLogin');
 var registerUserRouter = require('./routes/registerUser');
 var registerCarRouter = require('./routes/registerCar');
 var errorOccurRouter = require('./routes/errorOccur');
+var bindBankAccountFromDriverRouter = require('./routes/bindBankAccountFromDriver');
+var bindBankAccountFromPassengerRouter = require('./routes/bindBankAccountFromPassenger');
 // TODO:
 // bindBankAccount
 // addValue
@@ -104,6 +106,8 @@ app.use('/passengerLogin', passengerLoginRouter);
 app.use('/registerUser', registerUserRouter);
 app.use('/registerCar', registerCarRouter);
 app.use('/errorOccur', errorOccurRouter);
+app.use('/bindBankAccountFromDriver', bindBankAccountFromDriverRouter);
+app.use('/bindBankAccountFromPassenger', bindBankAccountFromPassengerRouter);
 // TODO:
 // bindBankAccount
 // addValue

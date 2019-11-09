@@ -16,7 +16,7 @@ const pool = new Pool({
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('bindBankAccount', { title: 'Bind Bank Account' });
+  res.render('bindBankAccountFromPassenger', { title: 'Bind Bank Account' });
 });
 
 router.post('/', function(req, res, next) {
