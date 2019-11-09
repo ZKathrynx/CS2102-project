@@ -31,9 +31,9 @@ router.post('/', function(req, res, next) {
 	// // Construct Specific SQL Query
 	// var insert_query = sql_query + "('" + matric + "','" + name + "','" + faculty + "')";
 	
-	pool.query(insert_query, (err, data) => {
-		res.redirect('/select')
-	});
+	// pool.query(insert_query, (err, data) => {
+	// 	res.redirect('/select')
+	// });
 });
 
 module.exports = router;
