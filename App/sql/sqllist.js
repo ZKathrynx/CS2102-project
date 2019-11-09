@@ -1,7 +1,7 @@
 // SQL query list to be used in the application
 module.exports = {
 
-    //create
+    // create
     add_user: 'INSERT INTO Users (uid, name, password, phone) VALUES($1, $2, $3, $4)',
     add_driver: 'INSERT INTO Drivers VALUES ($1)',
     add_passenger: 'INSERT INTO Passengers VALUES ($1)',
@@ -15,23 +15,23 @@ module.exports = {
     add_evaluate: 'INSERT INTO Evaluates VALUES ($1,$2.$3,$4,$5,$6,$7,$8)',
     add_complain: 'INSERT INTO Complains VALUES ($1,$2,$3,$4,$5)',
     
+    // retrieve
+    get_all_rides: 'WITH X AS( SELECT * FROM Rides GROUP BY uid,rdate,rtime HAVING CAST (NOW() AS DATE)< rdate OR ( CAST (NOW() AS DATE)= rdate AND CAST (NOW() AS TIME)< rtime)) SELECT uid AS driver, rdate AS start_date, rtime AS start_time, origin, destination,capacity FROM X WHERE reached = FALSE ORDER BY uid',
+    get_ride: 'SELECT * FROM Rides WHERE uid = $1 AND rdate = $2 AND rdate = $3',
+    get_bids: 'SELECT pid AS passenger, price FROM Bids WHERE did = $1 AND rdate = $2 AND rdate = $3',
+    check_password: 'SELECT uid FROM Users WHERE uid = $1 and password = $2',
+    get_account: 'SELECT * FROM Users WHERE uid = $1',
+    get_car: 'SELECT * FROM Owns AS O JOIN Cars AS C ON O.cid = C.plate WHERE O.uid = $1',
     
-    // all_rides: 'SELECT * FROM RIDES WHERE is_complete = FALSE',
-	// check_username: 'SELECT * FROM Users where username = $1',
-	
-	// add_bookmark: 'INSERT INTO bookmarks (puname, pickup, dropoff) VALUES ($1, $2, $3)',
+    // update
+    update_balance: 'UPDATE Users SET balance = balance + $2 WHERE uid = $1',
 
-	userpass: 'SELECT username,password FROM users WHERE EXISTS (SELECT 1 FROM users WHERE username = $1 AND password = $2) WHERE username = $1 AND password = $2',
 
-    // all_car: 'SELECT * FROM car',
-    
-    // //retrieve
+    // complex queries
+    // 1: auto select bid
+    // 2: rank all rides according to driver ranking
+    // 3: select all rides where driver got no complain
 
-	// // verification - driver
-	// get_verify: 'SELECT * FROM verify v, users u WHERE v.is_verified = \'FALSE\' AND u.username = v.duname',
-	// add_verify: 'UPDATE verify SET is_verified = TRUE WHERE duname = $1',
-	// // default admin name is Z and default is_verified = FALSE
-	// add_verify_request: 'INSERT INTO verify VALUES(\'Z\', $1, $2, FALSE)',
 	// check_user_is_admin: 'SELECT * FROM admin a WHERE a.username = $1', 
 	// check_driver_able_to_add_rides: 'SELECT * from verify v WHERE v.duname = $1 AND is_verified = TRUE', 
 	// approve_verified_driver: 'UPDATE verify SET auname = $1, is_verified = TRUE WHERE duname = $2', 
@@ -42,12 +42,8 @@ module.exports = {
 	// // favourite driver 
 	// get_favourite_driver: 'SELECT * FROM likes WHERE puname = $1',
 	// check_if_driver_already_favourited: 'SELECT * FROM likes WHERE puname = $1 AND duname = $2',
-	// add_favourite_driver: 'INSERT INTO likes VALUES($1, $2)',
-
-	// // bookmark	
-	// get_bookmarks: 'SELECT * FROM bookmarks WHERE puname = $1',
-
-	// // history.js / history.ejs
+    // add_favourite_driver: 'INSERT INTO likes VALUES($1, $2)',
+    
 	// get_history_as_driver:'SELECT * FROM rides WHERE is_complete = TRUE AND username = $1',
 	// get_history_as_passenger:'SELECT * FROM rides NATURAL JOIN bids WHERE is_complete = TRUE AND puname = $1 AND is_win = TRUE',
 	// get_upcoming_rides_driver: 'SELECT * FROM rides WHERE is_complete = FALSE AND username = $1',
