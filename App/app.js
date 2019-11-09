@@ -59,13 +59,15 @@ var evaluateRouter = require('./routes/evaluate');
 // viewAllEvaluation
 // viewBid
 
-// searchForRide
+// searchRide
 // viewBidStatus
 // viewCurrentRide
 var viewAccountRouter = require('./routes/viewAccount');
 var addValueRouter = require('./routes/addValue');
 
 var advertiseRideRouter = require('./routes/advertiseRide');
+
+var searchRideRouter = require('./routes/searchRide');
 
 
 var app = express();
@@ -135,13 +137,15 @@ app.use('/evaluate', evaluateRouter);
 // viewAllEvaluation
 // viewBid
 
-// searchForRide
+// searchRide
 // viewBidStatus
 // viewCurrentRide
 app.use('/viewAccount', viewAccountRouter);
 app.use('/addValue', addValueRouter);
 
 app.use('/advertiseRide', advertiseRideRouter);
+
+app.use('/searchRide', searchRideRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
