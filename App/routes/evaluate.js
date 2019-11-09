@@ -32,8 +32,8 @@ router.post('/', function(req, res, next) {
 	var rank  = req.body.rank;
 	var comment = req.body.comment;
 	
-	pool.query(sql_query.add_evaluation [pid, did, rdate, rtime, edate, etime, rank, comment], (err, data) => {
-        res.redirect('/passengerFunction')
+	pool.query(sql_query.add_evaluate, [did, pid, rdate, rtime, edate, etime, rank, comment], (err, data) => {
+        res.redirect('/passengerFunctions')
     });
 });
 
