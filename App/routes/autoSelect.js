@@ -31,7 +31,10 @@ router.post('/', function(req, res, next) {
 	pool.query(sql_query.auto_select, [uid, rdate, rtime], (err, data) => {
 		res.cookie("rdate", rdate, { httpOnly: true });
 		res.cookie("rtime", rtime, { httpOnly: true });
-		res.redirect('/autoSelectResult')
+		pool.query(sql_query.update_other_bid, [uid, rdate, rtime], (err, data) => {
+			pool.query(sql_query.add_deal, [uid, passengerId, rdate, rtime], (err, data) => {
+				res.redirect('/autoSelectResult')
+			});
     });
 });
 
