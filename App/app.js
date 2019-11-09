@@ -53,6 +53,7 @@ var viewBidsRouter = require('./routes/viewBids');
 var complainRouter = require('./routes/complain');
 var evaluateRouter = require('./routes/evaluate');
 var viewStartedRideRouter = require('./routes/viewStartedRide');
+var autoSelectRouter = require('./routes/autoSelect');
 // TODO:
 // bindBankAccount
 // addValue
@@ -129,6 +130,7 @@ app.use('/viewBids', viewBidsRouter);
 app.use('/complain', complainRouter);
 app.use('/evaluate', evaluateRouter);
 app.use('/viewStartedRide', viewStartedRideRouter);
+app.use('/autoSelect', autoSelectRouter);
 app.use(cookieParser());
 // TODO:
 // bindBankAccount
