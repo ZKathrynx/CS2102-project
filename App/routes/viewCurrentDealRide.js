@@ -20,7 +20,7 @@ const pool = new Pool({
 router.get('/', function(req, res, next) {
 	var uid = req.cookies["id"];
 	pool.query(sql_query.get_current_deal, [uid], (err, data) => {
-		res.render('viewCurrentDealRide', { title: 'View Current Deal Rides', data: data.rows });
+		res.render('viewCurrentDealRide', { title: 'View Current Deal Ride', data: data.rows });
 	});
 });
 

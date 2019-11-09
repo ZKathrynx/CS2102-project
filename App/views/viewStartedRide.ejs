@@ -43,13 +43,7 @@
 				<% } %>
             </tbody>	  
 		</table>
-		<h2>Complain</h2>
-		<form id="html_form" action="viewStartedRide" role="form" method="post">
-			<div class="form-group">
-				<label for="content">Complaint Content</label>
-				<input type="text" class="form-control" id="content" name="content" aria-describedby="contentHelp" placeholder="Enter complaint content">
-			</div>
-			<button type="submit" class="btn btn-primary">Start Trip</button>
-		</form>
+		<button type="button" onclick="window.location.href='/complain'" class="btn btn-primary">Complain</button>
+		<button type="button" onclick="window.location.href='/evaluate'" class="btn btn-primary">End Trip</button>
   </body>
 </html>
