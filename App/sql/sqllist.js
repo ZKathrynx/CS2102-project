@@ -8,7 +8,7 @@ module.exports = {
     add_bankaccount: 'INSERT INTO BankAccounts VALUES ($1,$2)',
     add_bind: 'INSERT INTO Binds VALUES ($1,$2)',
     add_car: 'INSERT INTO Cars VALUES($1,$2,$3)',
-    add_own: 'INSERT INTO Owns VALUE($1,$2)',
+    add_own: 'INSERT INTO Owns VALUES($1,$2)',
     add_bid: 'INSERT INTO Bids (did,pid,rdate,rtime,price) VALUES ($1,$2,$3,$4,$5)',
     add_ride: 'INSERT INTO Rides VALUES ($1,$2,$3,$4,$5,$6)',
     add_deal: 'INSERT INTO Deals (did,pid,rdate,rtime,atime) VALUES ($1,$2,$3,$4,$5)',
