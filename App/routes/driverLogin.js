@@ -20,17 +20,17 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-	// Retrieve Information
 	var input_userId = req.body.userId;
 	var input_password = req.body.password;
-	
+
 	// Construct Specific SQL Query
-	pool.query(sql_query.userpass,[input_userId, input_password], (err, data) => {	
-    if (data.rows[0] == undefined) {	
-      alert("Login failed! Invalid user ID or password")	
+	pool.query(sql_query.check_password,[input_userId, input_password], (err, data) => {	
+    if (data.rows[0] == undefined) {
+		res.redirect('/errorOccur');
+        //alert("Login failed! Invalid user ID or password")
     } else {
-		  res.redirect('/driverFunctions')
-  	};
+		  res.redirect('/driverFunctions');
+  	}
 	});
 });
 
