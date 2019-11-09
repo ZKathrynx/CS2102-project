@@ -17,27 +17,27 @@
 		<script src="javascripts/insertScript.js"></script>
   </head>
   <body>
-    <h1>CS2102: <%= title%></h1>
-		<form id="advertise_ride_form" action="insert" role="form" method="post">
+    <h1>Carpool System: <%= title%></h1>
+		<form id="html_form" action="insert" role="form" method="post">
 			<div class="form-group">
-				<label for="max">Max Capacity</label>
-				<input type="text" class="form-control" id="max" name="max" aria-describedby="maxHelp" placeholder="Enter max Capacity">
+				<label for="rdate">Ride Date:</label>
+				<input type="text" class="form-control" id="rdate" name="rdate" aria-describedby="rdateHelp" placeholder="Enter your ride date">
 			</div>
 			<div class="form-group">
-				<label for="origin">Origin</label>
+				<label for="rtime">Ride Time:</label>
+				<input type="text" class="form-control" id="rtime" name="rtime" aria-describedby="rtimeHelp" placeholder="Enter your ride start time">
+			</div>
+			<div class="form-group">
+				<label for="origin">Origin:</label>
 				<input type="text" class="form-control" id="origin" name="origin" aria-describedby="originHelp" placeholder="Enter your origin">
 			</div>
 			<div class="form-group">
-				<label for="destination">Destination</label>
-				<input type="text" class="form-control" id="destination" name="destination" aria-describedby="destinationHelp" placeholder="Enter your destination">
+				<label for="destination">Destination:</label>
+				<input type="text" class="form-control" id="destination" name="destination" aria-describedby="destinationHelp" placeholder="Enter your destination.">
 			</div>
 			<div class="form-group">
-				<label for="rdate">Start Date</label>
-				<input type="text" class="form-control" id="rdate" name="rdate" aria-describedby="rdateHelp" placeholder="Enter your start date">
-			</div>
-			<div class="form-group">
-				<label for="rtime">Start Time</label>
-				<input type="text" class="form-control" id="rtime" name="rtime" aria-describedby="rtimeHelp" placeholder="Enter your start time">
+				<label for="max">Maximum Capacity</label>
+				<input type="text" class="form-control" id="max" name="max" aria-describedby="maxHelp" placeholder="Enter your maximum capacity)">
 			</div>
 			<button type="submit" class="btn btn-primary">Advertise Ride</button>
 		</form>
