@@ -16,22 +16,18 @@ const pool = new Pool({
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('driverLogin', { title: 'Driver Login' });
+  res.render('bindBankAccount', { title: 'Bind Bank Account' });
 });
 
 router.post('/', function(req, res, next) {
-	// Retrieve Information
-	var input_userId = req.body.userId;
-	var input_password = req.body.password;
-	
-	// Construct Specific SQL Query
-	pool.query(sql_query.userpass,[input_userId, input_password], (err, data) => {	
-    if (data.rows[0] == undefined) {	
-      alert("Login failed! Invalid user ID or password")	
-    } else {
-		  res.redirect('/driverFunctions')
-  	};
-	});
+	var input_bId = req.body.bankId;
+    var input_bname = req.body.bname;
+   
+	//balance: assign default value
+    pool.query(sql_query.add_bankaccount,[input_bId, input_bname], (err, data))
+    pool.query(sql_query.add_bind,[input_userId, input_bId], (err, data)) 
+    res.redirect('/driverFunctions') 
+    
 });
 
 module.exports = router;

@@ -18,10 +18,9 @@ const pool = new Pool({
 
 
 router.get('/', function(req, res, next) {
-	pool.query(sql_query.get_account, [uid],  (err, data) => {
-		res.render('viewAccount', { title: 'Account Info', data: data.rows });
+	pool.query(sql_query.get_evaluations, [uid], (err, data) => {
+		res.render('viewEvaluations', { title: 'Database Connect', data: data.rows });
 	});
 });
-
 
 module.exports = router;

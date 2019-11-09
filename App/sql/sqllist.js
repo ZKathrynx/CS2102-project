@@ -38,26 +38,17 @@ module.exports = {
     // 2: auto select bid
     auto_select: 'WITH X AS ( SELECT * FROM Bids WHERE did = $1 AND rdate = $2 AND rtime = $3 ORDER BY price DESC LIMIT 1) UPDATE Bids AS B SET is_win = TRUE, is_pending = FALSE FROM X WHERE B.did = X.did AND B.rdate = X.rdate AND B.rtime = X.rtime AND B.pid = X.pid',
     // 3: rank all rides according to driver ranking or auto update balance
- 
 
     
-    
-    // all_rides: 'SELECT * FROM RIDES WHERE is_complete = FALSE',
-	// check_username: 'SELECT * FROM Users where username = $1',
-	
-	// add_bookmark: 'INSERT INTO bookmarks (puname, pickup, dropoff) VALUES ($1, $2, $3)',
+    // update
+    update_balance: 'UPDATE Users SET balance = balance + $2 WHERE uid = $1',
 
-	userpass: 'SELECT username,password FROM users WHERE EXISTS (SELECT 1 FROM users WHERE username = $1 AND password = $2) WHERE username = $1 AND password = $2',
 
-    // all_car: 'SELECT * FROM car',
-    
-    // //retrieve
+    // complex queries
+    // 1: auto select bid
+    // 2: rank all rides according to driver ranking
+    // 3: select all rides where driver got no complain
 
-	// // verification - driver
-	// get_verify: 'SELECT * FROM verify v, users u WHERE v.is_verified = \'FALSE\' AND u.username = v.duname',
-	// add_verify: 'UPDATE verify SET is_verified = TRUE WHERE duname = $1',
-	// // default admin name is Z and default is_verified = FALSE
-	// add_verify_request: 'INSERT INTO verify VALUES(\'Z\', $1, $2, FALSE)',
 	// check_user_is_admin: 'SELECT * FROM admin a WHERE a.username = $1', 
 	// check_driver_able_to_add_rides: 'SELECT * from verify v WHERE v.duname = $1 AND is_verified = TRUE', 
 	// approve_verified_driver: 'UPDATE verify SET auname = $1, is_verified = TRUE WHERE duname = $2', 
@@ -68,12 +59,8 @@ module.exports = {
 	// // favourite driver 
 	// get_favourite_driver: 'SELECT * FROM likes WHERE puname = $1',
 	// check_if_driver_already_favourited: 'SELECT * FROM likes WHERE puname = $1 AND duname = $2',
-	// add_favourite_driver: 'INSERT INTO likes VALUES($1, $2)',
-
-	// // bookmark	
-	// get_bookmarks: 'SELECT * FROM bookmarks WHERE puname = $1',
-
-	// // history.js / history.ejs
+    // add_favourite_driver: 'INSERT INTO likes VALUES($1, $2)',
+    
 	// get_history_as_driver:'SELECT * FROM rides WHERE is_complete = TRUE AND username = $1',
 	// get_history_as_passenger:'SELECT * FROM rides NATURAL JOIN bids WHERE is_complete = TRUE AND puname = $1 AND is_win = TRUE',
 	// get_upcoming_rides_driver: 'SELECT * FROM rides WHERE is_complete = FALSE AND username = $1',
