@@ -15,16 +15,29 @@
   </head>
   <body>
     <h1><%= title%></h1>
-    	<form id="html_form" action="autoSelect" role="form" method="post">
-			<div class="form-group">
-				<label for="rdate">Start Date</label>
-				<input type="text" class="form-control" id="rdate" name="rdate" placeholder="Enter Start Date">
-			</div>
-			<div class="form-group">
-				<label for="rtime">Start Time</label>
-				<input type="text" class="form-control" id="rtime" name="rtime" placeholder="Enter Start Time">
-			</div>
-			<button type="submit" class="btn btn-primary">Auto Select</button>
-		</form>
+		<table class="table">
+            <thead>
+				<tr>
+					<th scope="col">Passenger ID</th>
+					<th scope="col">Ride Date</th>
+                    <th scope="col">Ride Time</th>
+                    <th scope="col">Offered Price</th>
+					<th scope="col">Pending</th>
+                    <th scope="col">Win</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% for(var i=0; i<data.length; i++) { %>
+				<tr>
+					<td><%= data[i].did%></td>
+					<td><%= data[i].rdate%></td>
+                    <td><%= data[i].rtime%></td>
+                    <td><%= data[i].price%></td>
+					<td><%= data[i].is_pending%></td>
+                    <td><%= data[i].is_win%></td>
+				</tr>
+				<% } %>
+            </tbody>	  
+        </table>
   </body>
 </html>
