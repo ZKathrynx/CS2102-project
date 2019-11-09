@@ -14,6 +14,7 @@ const pool = new Pool({
 	connectionString: process.env.DATABASE_URL
 })
 
+
 // GET
 router.get('/', function(req, res, next) {
 	res.render('registerUser', { title: 'Creating Account' });
@@ -28,10 +29,9 @@ router.post('/', function(req, res, next) {
 	var destination = req.body.destination;
 	var max = req.body.max;
 	
-	pool.query(sql_query.add_ride [userid, username, password, phoneNo], (err, data) => {
-        res.redirect('/registerCar')
-    }
-	
+	pool.query(sql_query.add_ride [uid, rdate, rtime, origin, destination, max], (err, data) => {
+        res.redirect('/viewBids')
+    });
 });
 
 module.exports = router;
