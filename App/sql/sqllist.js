@@ -42,7 +42,4 @@ module.exports = {
     // 3: rank all rides according to driver ranking
     rank_drivers: 'WITH X AS ( SELECT D.uid FROM Drivers AS D WHERE D.uid IN ( SELECT R.uid FROM Rides AS R WHERE R.reached = FALSE )), Y AS ( SELECT E.did, AVG(rank) AS avgrank FROM Evaluates AS E GROUP BY E.did ) SELECT X.uid FROM X, Y WHERE X.uid = Y.did ORDER BY Y.avgrank DESC;'
     
-	// driver_rating: 'SELECT ROUND(AVG(rating),2) FROM ratings GROUP BY duname HAVING duname = $1',
-	// rides_search: 'SELECT * FROM rides r WHERE r.pickup = $1 AND r.dropoff = $2',
-	// individualRide: 'SELECT * FROM rides r,bids b WHERE r.pickup = $1 AND r.dropoff = $2 AND r.ride_date = $3  AND r.start_time = $4 AND r.username = $5 AND b.pickup = $1 AND b.dropoff = $2 AND b.ride_date = $3  AND b.start_time = $4 AND b.duname = $5 ORDER BY b.amount DESC',
 }
