@@ -39,8 +39,15 @@ var passengerLoginRouter = require('./routes/passengerLogin');
 var registerUserRouter = require('./routes/registerUser');
 var registerCarRouter = require('./routes/registerCar');
 var errorOccurRouter = require('./routes/errorOccur');
-var bindBankAccountFromDriverRouter = require('./routes/bindBankAccountFromDriver');
+var viewAllAvailableRidesRouter = require('./routes/viewAllAvailableRides');
 var bindBankAccountFromPassengerRouter = require('./routes/bindBankAccountFromPassenger');
+var bindBankAccountFromDriverRouter = require('./routes/bindBankAccountFromDriver');
+var viewBidStatusRouter = require('./routes/viewBidStatus');
+var viewCurrentDealRideRouter = require('./routes/viewCurrentDealRide');
+var viewDriverRankingRouter = require('./routes/viewDriverRanking');
+var viewEvaluationsRouter = require('./routes/viewEvaluations');
+var advertiseRideRouter = require('./routes/advertiseRide');
+var viewBidsRouter = require('./routes/viewBids');
 // TODO:
 // bindBankAccount
 // addValue
@@ -108,6 +115,13 @@ app.use('/registerCar', registerCarRouter);
 app.use('/errorOccur', errorOccurRouter);
 app.use('/bindBankAccountFromDriver', bindBankAccountFromDriverRouter);
 app.use('/bindBankAccountFromPassenger', bindBankAccountFromPassengerRouter);
+app.use('/viewAllAvailableRides', viewAllAvailableRidesRouter);
+app.use('/viewBidStatus', viewBidStatusRouter);
+app.use('/viewCurrentDealRide', viewCurrentDealRideRouter);
+app.use('/viewDriverRanking', viewDriverRankingRouter);
+app.use('/viewEvaluations', viewEvaluationsRouter);
+app.use('/advertiseRide', advertiseRideRouter);
+app.use('/viewBids', viewBidsRouter);
 // TODO:
 // bindBankAccount
 // addValue
