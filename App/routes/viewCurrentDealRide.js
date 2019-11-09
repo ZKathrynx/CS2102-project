@@ -19,7 +19,7 @@ const pool = new Pool({
 
 router.get('/', function(req, res, next) {
 	pool.query(sql_query.get_current_deal, [uid], (err, data) => {
-		res.render('viewCurrentDealRides', { title: 'Database Connect', data: data.rows });
+		res.render('viewCurrentDealRides', { title: 'View Current Deal Rides', data: data.rows });
 	});
 });
 
