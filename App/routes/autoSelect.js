@@ -29,9 +29,28 @@ router.post('/', function(req, res, next) {
     var rtime  = req.body.rtime;
 	var uid = req.cookies["id"];
 	pool.query(sql_query.auto_select, [uid, rdate, rtime], (err, data) => {
+			if (err) {
+				throw err
+			}
 		res.cookie("rdate", rdate, { httpOnly: true });
 		res.cookie("rtime", rtime, { httpOnly: true });
-		res.redirect('/autoSelectResult')
+		pool.query(sql_query.update_other_bid, [uid, rdate, rtime], (err, data) => {
+			if (err) {
+				throw err
+			}
+			pool.query(sql_query.get_win_bid, [uid, rdate, rtime], (err, data) => {
+							if (err) {
+				throw err
+			}
+				var passengerId = data.rows[0].pid;
+				pool.query(sql_query.add_deal, [uid, passengerId, rdate, rtime], (err, data) => {
+								if (err) {
+				throw err
+			}
+					res.redirect('/autoSelectResult')
+				});
+			});
+		});
     });
 });
 
