@@ -25,11 +25,14 @@ router.post('/', function(req, res, next) {
     // Retrieve Information
     var pid = req.body.pid;
     var did  = req.body.did;
-	var cdate = req.body.cdate;
-    var ctime  = req.body.ctime;
-	var decription = req.body.decription;
+	var edate = req.body.edate;
+    var etime  = req.body.etime;
+	var description = req.body.description;
 	
-	pool.query(sql_query.add_complain, [did, pid, cdate, ctime, decription], (err, data) => {
+	pool.query(sql_query.add_complain, [did, pid, edate, etime, description], (err, data) => {
+		if (err) {
+			throw err
+		}
         res.redirect('/viewStartedRide')
     });
 });
