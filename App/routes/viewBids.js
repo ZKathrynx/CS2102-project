@@ -32,7 +32,11 @@ router.post('/', function(req, res, next) {
 	
 	// Construct Specific SQL Query
 	pool.query(sql_query.update_win_bid,[uid, passengerId, rdate, rtime], (err, data) => {	
-		res.redirect('/driverFunctions');
+		pool.query(sql_query.update_other_bid, [uid, rdate, rtime], (err, data) => {
+			pool.query(sql_query.add_deal, [uid, passengerId, rdate, rtime], (err, data) => {
+				res.redirect('/driverFunctions');
+			});
+		});
 	});
 });
 
