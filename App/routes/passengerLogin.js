@@ -29,8 +29,8 @@ router.post('/', function(req, res, next) {
 		if (data.rows[0] == undefined) {
 			alert("Login failed! Invalid user ID or password.")
 		} else {
-			res.redirect('/passengerFunction');
-		}
+			res.redirect('/passengerFunction')
+		};
 		
 	});
 });

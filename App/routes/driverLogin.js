@@ -25,21 +25,12 @@ router.post('/', function(req, res, next) {
 	var input_password = req.body.password;
 	
 	// Construct Specific SQL Query
-	
-<<<<<<< HEAD
-	pool.query(sql_query.userpass,[input_userId, input_password], (err, data) => {
-    if (data.rows[0] == undefined) {
-      alert("Login failed! Invalid user ID or password")
+	pool.query(sql_query.userpass,[input_userId, input_password], (err, data) => {	
+    if (data.rows[0] == undefined) {	
+      alert("Login failed! Invalid user ID or password")	
     } else {
-=======
-	pool.query(sql_query.userpass, [uid, password], (err, data) => {
-    if (data == input_password) {
->>>>>>> c20390f5117c2e8eac81b3538e56b8480782d8a8
-      res.redirect('/driverFunctions')
-    } else {
-      alert("Login failed! Invalid user ID or password")
-    };
-
+		res.redirect('/driverFunctions')
+	};
 	});
 });
 

@@ -1,3 +1,4 @@
+var sql_query = require('../sql/sqllist.js');
 var express = require('express');
 var router = express.Router();
 
@@ -16,13 +17,11 @@ const pool = new Pool({
 });
 
 
-/* SQL Query */
-var sql_query = 'SELECT * FROM Users';
-
 router.get('/', function(req, res, next) {
-	pool.query(sql_query, (err, data) => {
+	pool.query(sql_query.get_Account, (err, data) => {
 		res.render('viewAccount', { title: 'Account Info', data: data.rows });
 	});
 });
+
 
 module.exports = router;
