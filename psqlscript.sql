@@ -162,10 +162,20 @@ BEFORE INSERT OR UPDATE ON Rides
 EXECUTE PROCEDURE check_ride();
 
 
---possible TRIGGER 3: 
+--possible TRIGGER 3: all rank more than 5 is moderated to 5
+CREATE OR REPLACE FUNCTION check_rank() 
+RETURNS TRIGGER AS $$
+	BEGIN 
+	RETURN (OLD.did, OLD.pid, OLD.rdate, OLD.rtime, OLD.edate, OLD.etime,5,OLD.comment);
+	END; 
+$$ LANGUAGE plpgsql; 
 
+CREATE TRIGGER check_new_rank
+BEFORE INSERT OR UPDATE ON Evaluates
+FOR EACH ROW WHEN (NEW.rank>5) 
+EXECUTE PROCEDURE check_rank();
 
---dummy date
+--dummy data
 INSERT INTO Users VALUES ('1', 'A', 'passwordA', 'phoneA', '1000.0');
 INSERT INTO Users VALUES ('2', 'B', 'passwordB', 'phoneB', '2000.0');
 INSERT INTO Users VALUES ('3', 'C', 'passwordC', 'phoneC', '3000.0');
@@ -240,16 +250,6 @@ INSERT INTO Rides VALUES ('6', '2019-12-1', '04:00:00', 'NUS', 'NTU', '4');
 INSERT INTO Rides VALUES ('4', '2019-12-1', '01:00:00', 'NUS', 'NTU', '4');
 INSERT INTO Rides VALUES ('6', '2019-12-1', '01:00:00', 'NUS', 'NTU', '4');
 
-INSERT INTO Complains VALUES ('1', '10','2019-1-1', '00:10:00', 'ComplainA');
-INSERT INTO Complains VALUES ('2', '9', '2019-1-1', '00:05:00', 'ComplainB');
-INSERT INTO Complains VALUES ('3', '8', '2019-1-1', '01:05:00', 'ComplainC');
-INSERT INTO Complains VALUES ('4', '7', '2019-12-1', '02:05:00', 'ComplainD');
-INSERT INTO Complains VALUES ('5', '6', '2019-12-1', '03:05:00', 'ComplainE');
-INSERT INTO Complains VALUES ('6', '5', '2019-12-1', '04:05:00', 'ComplainF');
-INSERT INTO Complains VALUES ('4', '10','2019-12-1', '01:05:00', 'ComplainG');
-INSERT INTO Complains VALUES ('6', '9', '2019-12-1', '01:05:00', 'ComplainH');
-
-
 INSERT INTO Bids VALUES ('1', '10','2019-1-1', '00:00:00', '1');
 INSERT INTO Bids VALUES ('1', '9', '2019-1-1', '00:00:00', '0.5');
 INSERT INTO Bids VALUES ('2', '9', '2019-1-1', '00:00:00', '2');
@@ -279,3 +279,11 @@ INSERT INTO Evaluates VALUES ('6', '5', '2019-12-1', '04:00:00', '2019-1-1', '04
 INSERT INTO Evaluates VALUES ('4', '10','2019-12-1', '01:00:00', '2019-1-1', '01:30:00', '1', 'CommentG');
 INSERT INTO Evaluates VALUES ('6', '9', '2019-12-1', '01:00:00', '2019-1-1', '01:30:00', '2', 'CommentH');
 
+INSERT INTO Complains VALUES ('1', '10','2019-1-1', '00:10:00', 'ComplainA');
+INSERT INTO Complains VALUES ('2', '9', '2019-1-1', '00:05:00', 'ComplainB');
+INSERT INTO Complains VALUES ('3', '8', '2019-1-1', '01:05:00', 'ComplainC');
+INSERT INTO Complains VALUES ('4', '7', '2019-12-1', '02:05:00', 'ComplainD');
+INSERT INTO Complains VALUES ('5', '6', '2019-12-1', '03:05:00', 'ComplainE');
+INSERT INTO Complains VALUES ('6', '5', '2019-12-1', '04:05:00', 'ComplainF');
+INSERT INTO Complains VALUES ('4', '10','2019-12-1', '01:05:00', 'ComplainG');
+INSERT INTO Complains VALUES ('6', '9', '2019-12-1', '01:05:00', 'ComplainH');
