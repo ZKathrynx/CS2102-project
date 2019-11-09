@@ -24,4 +24,16 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+router.post('/', function(req, res, next) {
+	var driverId = req.body.driverId;
+	var rdate = req.body.rdate;
+	var rtime = req.body.rtime;
+	var uid = req.cookies["id"];
+	
+	// Construct Specific SQL Query
+	pool.query(sql_query.update_start_time,[driverId, rdate, rtime], (err, data) => {	
+		res.redirect('/viewStartedRide');
+	});
+});
+
 module.exports = router;
