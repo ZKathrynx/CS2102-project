@@ -25,12 +25,11 @@ router.post('/', function(req, res, next) {
 	var userid  = req.body.userid;
 	var username    = req.body.username;
 	var password = req.body.password;
-	var balance = req.body.balance;
 	var phoneNo = req.body.phoneNo;
 	var userType = req.body.userType;
 	
 	if(userType == "driver") {
-		pool.query(sql_query.add_user, [userid, username, password, phoneNo, balance], (err, data) => {
+		pool.query(sql_query.add_user, [userid, username, password, phoneNo], (err, data) => {
 			if(err){
 				throw err
 			}
@@ -42,7 +41,7 @@ router.post('/', function(req, res, next) {
 			});
 	});
 	} else if (userType == "passenger") {
-		pool.query(sql_query.add_user, [userid, username, password, phoneNo, balance], (err, data) => {
+		pool.query(sql_query.add_user, [userid, username, password, phoneNo], (err, data) => {
 			if(err){
 				throw err
 			}
@@ -54,7 +53,7 @@ router.post('/', function(req, res, next) {
 			});
 	});
 	} else if (userType == "both") {
-		pool.query(sql_query.add_user, [userid, username, password, phoneNo, balance], (err, data) => {
+		pool.query(sql_query.add_user, [userid, username, password, phoneNo], (err, data) => {
 			if(err){
 				throw err
 			}
