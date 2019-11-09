@@ -1,7 +1,8 @@
-# CS2102-project
 # Easy Grab
 
-## AY19/20 CS2102 project carpooling system
+## AY19/20 CS2102 project carpooling system Group 35
+
+
 
 ## To start
 
@@ -37,3 +38,7 @@
 2. use default user id '5' and password 'passwordE' to log in
 
 3. click the functions in the list that you want to try
+
+
+****
+For detailed instruction, please refer to Section 3. Functionalities and Constraints in Group 35's project report.
