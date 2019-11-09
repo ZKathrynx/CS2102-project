@@ -29,8 +29,10 @@ module.exports = {
     delete_balance: 'UPDATE Users SET balance = balance - $2 WHERE uid = $1',
     update_win_bid: 'UPDATE Bids SET is_pending = FALSE, is_win = TRUE WHERE did = $1 AND pid = $2 AND rdate = $3 AND rtime = $4',
     update_other_bid: 'UPDATE Bids SET is_pending  = FALSE WHERE did = $1 AND rdate = $2 AND rtime = $3 AND is_win = FALSE',
-    update_deal_time: 'UPDATE Deals SET dtime = $4 WHERE did = $1 AND rdate = $2 AND rtime = $3',
+    update_accept_time: 'UPDATE Deals SET atime = $4 WHERE did = $1 AND rdate = $2 AND rtime = $3',
+    update_start_time: 'UPDATE Deals SET dtime = $4 WHERE did = $1 AND rdate = $2 AND rtime = $3',
     update_ride_status: 'UPDATE Rides SET reached = TRUE WHERE did = $1 AND rdate = $2 AND rtime = $3',
+    get_current_deal: 'SELECT R.uid, R.rdate, R.rtime, R.origin, R.destination, R.capacity, B.price, D.atime FROM Rides AS R, Bids AS B, Deals AS D WHERE R.uid = B.did AND B.did = D.did AND R.rdate = B.rdate AND B.rdate = D.rdate AND R.rtime = B.rtime AND B.rtime = D.rtime AND B.pid = 1 AND B.is_win AND R.reached = FALSE',
 
     // complex queries
     // 1: get all rides before current time
@@ -38,16 +40,9 @@ module.exports = {
     // 2: auto select bid
     auto_select: 'WITH X AS ( SELECT * FROM Bids WHERE did = $1 AND rdate = $2 AND rtime = $3 ORDER BY price DESC LIMIT 1) UPDATE Bids AS B SET is_win = TRUE, is_pending = FALSE FROM X WHERE B.did = X.did AND B.rdate = X.rdate AND B.rtime = X.rtime AND B.pid = X.pid',
     // 3: rank all rides according to driver ranking
+    rank_drivers: 'WITH X AS ( SELECT D.uid FROM Drivers AS D WHERE D.uid IN ( SELECT R.uid FROM Rides AS R WHERE R.reached = FALSE )), Y AS ( SELECT E.did, AVG(rank) AS avgrank FROM Evaluates AS E GROUP BY E.did ) SELECT X.uid FROM X, Y WHERE X.uid = Y.did ORDER BY Y.avgrank DESC;'
     
-	
-	// get_upcoming_rides_driver: 'SELECT * FROM rides WHERE is_complete = FALSE AND username = $1',
-	// get_upcoming_rides_passenger: 'SELECT * FROM rides NATURAL JOIN bids WHERE is_win = TRUE AND puname = $1 AND is_complete = FALSE', // bids won but ride not complete
-	// complete_upcoming_rides_driver: 'UPDATE rides SET is_complete = TRUE WHERE username = $1 AND pickup = $2 AND dropoff = $3 AND ride_date = $4 AND start_time = $5',
-
 	// driver_rating: 'SELECT ROUND(AVG(rating),2) FROM ratings GROUP BY duname HAVING duname = $1',
 	// rides_search: 'SELECT * FROM rides r WHERE r.pickup = $1 AND r.dropoff = $2',
 	// individualRide: 'SELECT * FROM rides r,bids b WHERE r.pickup = $1 AND r.dropoff = $2 AND r.ride_date = $3  AND r.start_time = $4 AND r.username = $5 AND b.pickup = $1 AND b.dropoff = $2 AND b.ride_date = $3  AND b.start_time = $4 AND b.duname = $5 ORDER BY b.amount DESC',
-	// update_individual_bid: 'UPDATE bids SET is_win = \'TRUE\' WHERE b.pickup = $1 AND b.dropoff = $2 AND b.ride_date = $3  AND b.start_time = $4 AND b.duname = $5 AND b.puname = $6',
-    // update_win_bid: 'WITH X AS (SELECT * FROM Bids b WHERE b.pickup = $1 AND b.dropoff = $2 AND b.ride_date = $3  AND b.start_time = $4 AND b.duname = $5 ORDER BY amount DESC LIMIT $6) UPDATE bids b SET is_win = \'TRUE\' FROM X WHERE b.puname = X.puname AND b.duname = X.duname AND b.pickup = X.pickup AND b.dropoff = X.dropoff AND b.start_time = X.start_time AND b.ride_date = X.ride_date' 
-
 }
