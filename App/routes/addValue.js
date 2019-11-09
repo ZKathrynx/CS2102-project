@@ -1,4 +1,3 @@
-var sql_query = require('../sql/sqllist.js');
 var express = require('express');
 var router = express.Router();
 
@@ -14,24 +13,27 @@ const pool = new Pool({
 	connectionString: process.env.DATABASE_URL
 })
 
-/* GET home page. */
+/* SQL Query */
+var sql_query = 'INSERT INTO student_info VALUES';
+
+// GET
 router.get('/', function(req, res, next) {
-  res.render('driverLogin', { title: 'Driver Login' });
+	res.render('addValue', { title: 'Add Value' });
 });
 
+// POST
 router.post('/', function(req, res, next) {
 	// Retrieve Information
-	var input_userId = req.body.userId;
-	var input_password = req.body.password;
+	// var matric  = req.body.matric;
+	// var name    = req.body.name;
+	// var faculty = req.body.faculty;
 	
-	// Construct Specific SQL Query
-	pool.query(sql_query.userpass,[input_userId, input_password], (err, data) => {	
-    if (data.rows[0] == undefined) {	
-      alert("Login failed! Invalid user ID or password")	
-    } else {
-		res.redirect('/driverFunctions')
-	};
-	});
+	// // Construct Specific SQL Query
+	// var insert_query = sql_query + "('" + matric + "','" + name + "','" + faculty + "')";
+	
+	// pool.query(insert_query, (err, data) => {
+	// 	res.redirect('/select')
+	// });
 });
 
 module.exports = router;

@@ -1,3 +1,4 @@
+var sql_query = require('../sql/sqllist.js');
 var express = require('express');
 var router = express.Router();
 
@@ -13,9 +14,6 @@ const pool = new Pool({
 	connectionString: process.env.DATABASE_URL
 })
 
-/* SQL Query */
-var sql_query = 'INSERT INTO Users VALUES';
-
 // GET
 router.get('/', function(req, res, next) {
 	res.render('registerUser', { title: 'Creating Account' });
@@ -28,15 +26,25 @@ router.post('/', function(req, res, next) {
 	var username    = req.body.username;
 	var password = req.body.password;
 	var phoneNo = req.body.phoneNo;
-	// balance 设置成default就好
+	var userType = req.body.userType.toLowerCase();
 	
-	// TODO: 这个插入到sql里面
-	// Construct Specific SQL Query
-	// var insert_query = sql_query + "('" + matric + "','" + name + "','" + faculty + "')";
+	if(userType == "driver") {
+		pool.query(sql_query.addUser, [userid, username, password, phoneNo], (err, data))
+		pool.query(sql_query.addDriver, [userid], (err, data))
+		res.redirect('/registerCar')
+	} else if (userType == "passenger") {
+		pool.query(sql_query.addUser, [userid, username, password, phoneNo], (err, data))
+		pool.query(sql_query.addDriver, [userid], (err, data))
+		res.redirect('/passengerFunctions')
+	} else if (userType == "both") {
+		pool.query(sql_query.addUser, [userid, username, password, phoneNo], (err, data)) 
+		pool.query(sql_query.addDriver, [userid], (err, data))
+		pool.query(sql_query.addDriver, [userid], (err, data))
+		res.redirect('/registerCar')
+	} else {
+		alert("Invalid User Type!")
+	}
 	
-	// pool.query(insert_query, (err, data) => {
-	// 	res.redirect('/select')
-	// });
 });
 
 module.exports = router;
