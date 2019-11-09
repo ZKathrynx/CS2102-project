@@ -29,7 +29,7 @@ router.post('/', function(req, res, next) {
     var ctime  = req.body.ctime;
 	var decription = req.body.decription;
 	
-	pool.query(sql_query.add_evaluation [did, pid, cdate, ctime, decription], (err, data) => {
+	pool.query(sql_query.add_complain, [did, pid, cdate, ctime, decription], (err, data) => {
         res.redirect('/viewStartedRide')
     });
 });

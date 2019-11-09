@@ -18,6 +18,7 @@ const pool = new Pool({
 
 
 router.get('/', function(req, res, next) {
+	var uid = req.cookies["id"];
 	pool.query(sql_query.get_account, [uid],  (err, data) => {
 		res.render('viewAccount', { title: 'Account Info', data: data.rows });
 	});

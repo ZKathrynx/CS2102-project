@@ -16,7 +16,8 @@ const pool = new Pool({
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('driverLogin', { title: 'Driver Login' });
+	res.clearCookie("id", { httpOnly: true });
+    res.render('driverLogin', { title: 'Driver Login' });
 });
 
 router.post('/', function(req, res, next) {
@@ -29,6 +30,7 @@ router.post('/', function(req, res, next) {
 		res.redirect('/errorOccur');
         //alert("Login failed! Invalid user ID or password")
     } else {
+		res.cookie("id", input_userId, { httpOnly: true });
 		  res.redirect('/driverFunctions');
   	}
 	});

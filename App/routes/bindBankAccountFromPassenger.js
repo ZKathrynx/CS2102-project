@@ -20,6 +20,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
+	var input_userId = req.cookies["id"];
 	var input_bId = req.body.bankId;
     var input_bname = req.body.bname;
    

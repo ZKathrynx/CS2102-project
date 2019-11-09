@@ -1,3 +1,4 @@
+var sql_query = require('../sql/sqllist.js');
 var express = require('express');
 var router = express.Router();
 
@@ -12,9 +13,6 @@ const { Pool } = require('pg')
 const pool = new Pool({
 	connectionString: process.env.DATABASE_URL
 })
-
-/* SQL Query */
-var sql_query = 'INSERT INTO student_info VALUES';
 
 // GET
 router.get('/', function(req, res, next) {
@@ -34,6 +32,8 @@ router.post('/', function(req, res, next) {
 	// pool.query(insert_query, (err, data) => {
 	// 	res.redirect('/select')
 	// });
+
+	var input_userId = req.cookies["id"];
 	var input_amount = req.body.amount;
 
 	// Construct Specific SQL Query
