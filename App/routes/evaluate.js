@@ -17,20 +17,23 @@ const pool = new Pool({
 
 // GET
 router.get('/', function(req, res, next) {
-	res.render('registerUser', { title: 'Creating Account' });
+	res.render('evaluate', { title: 'Evaluate' });
 });
 
 // POST
 router.post('/', function(req, res, next) {
-	// Retrieve Information
+    // Retrieve Information
+    var pid = req.body.pid;
+    var did  = req.body.did;
 	var rdate = req.body.rdate;
-	var rtime  = req.body.rtime;
-	var origin  = req.body.origin;
-	var destination = req.body.destination;
-	var max = req.body.max;
+    var rtime  = req.body.rtime;
+    var edate = req.body.edate;
+	var etime  = req.body.etime;
+	var rank  = req.body.rank;
+	var comment = req.body.comment;
 	
-	pool.query(sql_query.add_ride [uid, rdate, rtime, origin, destination, max], (err, data) => {
-        res.redirect('/viewBids')
+	pool.query(sql_query.add_evaluation [pid, did, rdate, rtime, edate, etime, rank comment], (err, data) => {
+        res.redirect('/passengerFunction')
     });
 });
 

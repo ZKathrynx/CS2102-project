@@ -18,28 +18,41 @@
   </head>
   <body>
     <h1>Carpool System: <%= title%></h1>
-		<form id="html_form" action="adertiseRide" role="form" method="post">
+		<form id="html_form" action="evaluate" role="form" method="post">
+            <div class="form-group">
+				<label for="pid">Your ID:</label>
+				<input type="text" class="form-control" id="pid" name="pid" aria-describedby="pidHelp" placeholder="Enter your ID">
+			</div>
 			<div class="form-group">
+				<label for="did">Driver's ID:</label>
+				<input type="text" class="form-control" id="did" name="did" aria-describedby="didHelp" placeholder="Enter driver's ID">
+            </div>
+            <div class="form-group">
 				<label for="rdate">Ride Date:</label>
 				<input type="text" class="form-control" id="rdate" name="rdate" aria-describedby="rdateHelp" placeholder="Enter your ride date">
 			</div>
 			<div class="form-group">
 				<label for="rtime">Ride Time:</label>
 				<input type="text" class="form-control" id="rtime" name="rtime" aria-describedby="rtimeHelp" placeholder="Enter your ride start time">
+            </div>
+            <div class="form-group">
+				<label for="edate">Evaluation Date:</label>
+				<input type="text" class="form-control" id="edate" name="edate" aria-describedby="edateHelp" placeholder="Enter your evaluation date">
 			</div>
 			<div class="form-group">
-				<label for="origin">Origin:</label>
-				<input type="text" class="form-control" id="origin" name="origin" aria-describedby="originHelp" placeholder="Enter your origin">
+				<label for="etime">Evaluation Time:</label>
+				<input type="text" class="form-control" id="etime" name="etime" aria-describedby="etimeHelp" placeholder="Enter your evaluation time">
 			</div>
 			<div class="form-group">
-				<label for="destination">Destination:</label>
-				<input type="text" class="form-control" id="destination" name="destination" aria-describedby="destinationHelp" placeholder="Enter your destination.">
+				<label for="rank">Rank:</label>
+				<input type="number" class="form-control" id="rank" name="rank" aria-describedby="rankHelp" placeholder="Enter a ranking among 0 and 5">
 			</div>
 			<div class="form-group">
-				<label for="max">Maximum Capacity</label>
-				<input type="text" class="form-control" id="max" name="max" aria-describedby="maxHelp" placeholder="Enter your maximum capacity)">
+				<label for="comment">Comment:</label>
+				<input type="text" class="form-control" id="comment" name="comment" aria-describedby="commentHelp" placeholder="Enter your destination.">
 			</div>
-			<button type="submit" class="btn btn-primary">Advertise Ride</button>
+			
+			<button type="submit" class="btn btn-primary">Upload Comment</button>
 		</form>
 		
 		<script>
