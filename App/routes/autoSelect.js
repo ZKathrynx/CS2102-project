@@ -18,9 +18,9 @@ const pool = new Pool({
 
 
 router.get('/', function(req, res, next) {
-	var uid = req.cookies["id"];
-	pool.query(sql_query.get_evaluations, [uid], (err, data) => {
-		res.render('viewEvaluations', { title: 'View All Evaluations', data: data.rows });
+	var did = req.cookies["id"];
+	pool.query(sql_query.get_bids_driver, [did], (err, data) => {
+		res.render('autoSelect', { title: 'Auto Select', data: data.rows });
 	});
 });
 

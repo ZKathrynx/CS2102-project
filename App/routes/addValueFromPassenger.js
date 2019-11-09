@@ -16,7 +16,7 @@ const pool = new Pool({
 
 // GET
 router.get('/', function(req, res, next) {
-	res.render('addValue', { title: 'Add Value' });
+	res.render('addValueFromPassenger', { title: 'Add Value' });
 });
 
 // POST
@@ -42,7 +42,7 @@ router.post('/', function(req, res, next) {
 		res.redirect('/errorOccur');
         //alert("Login failed! Invalid user ID or password")
     } else {
-		  res.redirect('/driverFunctions');
+		  res.redirect('/passengerFunctions');
   	}
 	});
 });

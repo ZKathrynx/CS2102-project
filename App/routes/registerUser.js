@@ -16,6 +16,7 @@ const pool = new Pool({
 
 // GET
 router.get('/', function(req, res, next) {
+	res.clearCookie("id", { httpOnly: true });
 	res.render('registerUser', { title: 'Creating Account' });
 });
 
@@ -29,6 +30,7 @@ router.post('/', function(req, res, next) {
 	var userType = req.body.userType;
 	
 	if(userType == "driver") {
+		res.cookie("id", userid, { httpOnly: true });
 		pool.query(sql_query.add_user, [userid, username, password, phoneNo], (err, data) => {
 			if(err){
 				throw err
@@ -41,6 +43,7 @@ router.post('/', function(req, res, next) {
 			});
 	});
 	} else if (userType == "passenger") {
+		res.cookie("id", userid, { httpOnly: true });
 		pool.query(sql_query.add_user, [userid, username, password, phoneNo], (err, data) => {
 			if(err){
 				throw err
@@ -53,6 +56,7 @@ router.post('/', function(req, res, next) {
 			});
 	});
 	} else if (userType == "both") {
+		res.cookie("id", userid, { httpOnly: true });
 		pool.query(sql_query.add_user, [userid, username, password, phoneNo], (err, data) => {
 			if(err){
 				throw err

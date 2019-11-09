@@ -69,7 +69,7 @@ uid INTEGER,
 cid INTEGER,
 PRIMARY KEY (uid,cid),
 FOREIGN KEY (uid) REFERENCES Users,
-FOREIGN KEY (cid) REFERENCES Cars
+FOREIGN KEY (cid) REFERENCES Cars(plate)
 );
  
 CREATE TABLE Complains (
@@ -162,7 +162,7 @@ BEFORE INSERT OR UPDATE ON Rides
 EXECUTE PROCEDURE check_ride();
 
 
---possible TRIGGER 3: all rank more than 5 is moderated to 5
+-- TRIGGER 3: all rank more than 5 is moderated to 5
 CREATE OR REPLACE FUNCTION check_rank() 
 RETURNS TRIGGER AS $$
 	BEGIN 
