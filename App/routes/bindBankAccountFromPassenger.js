@@ -21,13 +21,17 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 	var input_userId = req.cookies["id"];
-	var input_bId = req.body.bankId;
+	var input_bId = req.body.bId;
     var input_bname = req.body.bname;
-   
 	//balance: assign default value
-    pool.query(sql_query.add_bankaccount,[input_bId, input_bname], (err, data))
-    pool.query(sql_query.add_bind,[input_userId, input_bId], (err, data)) 
-    res.redirect('/passengerFunctions') 
+    pool.query(sql_query.add_bankaccount,[input_bId, input_bname], (err, data) => {
+		pool.query(sql_query.add_bind,[input_userId, input_bId], (err, data) => {
+			if (err) {
+				throw err
+			}
+			res.redirect('/passengerFunctions');
+		});
+	}); 
     
 });
 

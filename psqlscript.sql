@@ -69,7 +69,7 @@ uid INTEGER,
 cid INTEGER,
 PRIMARY KEY (uid,cid),
 FOREIGN KEY (uid) REFERENCES Users,
-FOREIGN KEY (cid) REFERENCES Cars
+FOREIGN KEY (cid) REFERENCES Cars(plate)
 );
  
 CREATE TABLE Complains (
