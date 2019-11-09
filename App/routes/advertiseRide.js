@@ -1,3 +1,4 @@
+var sql_query = require('../sql/sqllist.js');
 var express = require('express');
 var router = express.Router();
 
@@ -13,27 +14,24 @@ const pool = new Pool({
 	connectionString: process.env.DATABASE_URL
 })
 
-/* SQL Query */
-var sql_query = 'INSERT INTO student_info VALUES';
 
 // GET
 router.get('/', function(req, res, next) {
-	res.render('advertiseRide', { title: 'Advertise' });
+	res.render('registerUser', { title: 'Creating Account' });
 });
 
 // POST
 router.post('/', function(req, res, next) {
 	// Retrieve Information
-	// var matric  = req.body.matric;
-	// var name    = req.body.name;
-	// var faculty = req.body.faculty;
+	var rdate = req.body.rdate;
+	var rtime  = req.body.rtime;
+	var origin  = req.body.origin;
+	var destination = req.body.destination;
+	var max = req.body.max;
 	
-	// // Construct Specific SQL Query
-	// var insert_query = sql_query + "('" + matric + "','" + name + "','" + faculty + "')";
-	
-	// pool.query(insert_query, (err, data) => {
-	// 	res.redirect('/select')
-	// });
+	pool.query(sql_query.add_ride [uid, rdate, rtime, origin, destination, max], (err, data) => {
+        res.redirect('/viewBids')
+    });
 });
 
 module.exports = router;

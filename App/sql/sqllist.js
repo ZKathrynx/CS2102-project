@@ -2,7 +2,7 @@
 module.exports = {
 
     // create
-    add_user: 'INSERT INTO Users (uid, name, password, phone, balance) VALUES($1, $2, $3, $4, $5)',
+    add_user: 'INSERT INTO Users (uid, name, password, phone) VALUES($1, $2, $3, $4)',
     add_driver: 'INSERT INTO Drivers VALUES ($1)',
     add_passenger: 'INSERT INTO Passengers VALUES ($1)',
     add_bankaccount: 'INSERT INTO BankAccounts VALUES ($1,$2)',
@@ -23,7 +23,7 @@ module.exports = {
     get_account: 'SELECT * FROM Users WHERE uid = $1',
     get_car: 'SELECT * FROM Owns AS O JOIN Cars AS C ON O.cid = C.plate WHERE O.uid = $1',
     get_evaluations: 'SELECT * FROM Evaluates WHERE did = $1',
- 
+
     // update
     add_balance: 'UPDATE Users SET balance = balance + $2 WHERE uid = $1',
     delete_balance: 'UPDATE Users SET balance = balance - $2 WHERE uid = $1',
@@ -31,38 +31,15 @@ module.exports = {
     update_other_bid: 'UPDATE Bids SET is_pending  = FALSE WHERE did = $1 AND rdate = $2 AND rtime = $3 AND is_win = FALSE',
     update_deal_time: 'UPDATE Deals SET dtime = $4 WHERE did = $1 AND rdate = $2 AND rtime = $3',
     update_ride_status: 'UPDATE Rides SET reached = TRUE WHERE did = $1 AND rdate = $2 AND rtime = $3',
- 
+
     // complex queries
     // 1: get all rides before current time
     get_all_rides: 'WITH X AS( SELECT * FROM Rides GROUP BY uid,rdate,rtime HAVING CAST (NOW() AS DATE)< rdate OR ( CAST (NOW() AS DATE)= rdate AND CAST (NOW() AS TIME)< rtime)) SELECT uid AS driver, rdate AS start_date, rtime AS start_time, origin, destination,capacity FROM X WHERE reached = FALSE ORDER BY uid',
     // 2: auto select bid
     auto_select: 'WITH X AS ( SELECT * FROM Bids WHERE did = $1 AND rdate = $2 AND rtime = $3 ORDER BY price DESC LIMIT 1) UPDATE Bids AS B SET is_win = TRUE, is_pending = FALSE FROM X WHERE B.did = X.did AND B.rdate = X.rdate AND B.rtime = X.rtime AND B.pid = X.pid',
-    // 3: rank all rides according to driver ranking or auto update balance
-
+    // 3: rank all rides according to driver ranking
     
-    // update
-    update_balance: 'UPDATE Users SET balance = balance + $2 WHERE uid = $1',
-
-
-    // complex queries
-    // 1: auto select bid
-    // 2: rank all rides according to driver ranking
-    // 3: select all rides where driver got no complain
-
-	// check_user_is_admin: 'SELECT * FROM admin a WHERE a.username = $1', 
-	// check_driver_able_to_add_rides: 'SELECT * from verify v WHERE v.duname = $1 AND is_verified = TRUE', 
-	// approve_verified_driver: 'UPDATE verify SET auname = $1, is_verified = TRUE WHERE duname = $2', 
-	// check_driver_exists_and_verified: 'SELECT duname, is_verified FROM driver d, verify v WHERE d.username = v.duname AND d.username = $1 ', 
-	// check_driver_verified: 'SELECT * FROM verify WHERE duname = $1 and is_verified = TRUE',
-	// get_driver_rides: 'SELECT * FROM RIDES WHERE username = $1',
 	
-	// // favourite driver 
-	// get_favourite_driver: 'SELECT * FROM likes WHERE puname = $1',
-	// check_if_driver_already_favourited: 'SELECT * FROM likes WHERE puname = $1 AND duname = $2',
-    // add_favourite_driver: 'INSERT INTO likes VALUES($1, $2)',
-    
-	// get_history_as_driver:'SELECT * FROM rides WHERE is_complete = TRUE AND username = $1',
-	// get_history_as_passenger:'SELECT * FROM rides NATURAL JOIN bids WHERE is_complete = TRUE AND puname = $1 AND is_win = TRUE',
 	// get_upcoming_rides_driver: 'SELECT * FROM rides WHERE is_complete = FALSE AND username = $1',
 	// get_upcoming_rides_passenger: 'SELECT * FROM rides NATURAL JOIN bids WHERE is_win = TRUE AND puname = $1 AND is_complete = FALSE', // bids won but ride not complete
 	// complete_upcoming_rides_driver: 'UPDATE rides SET is_complete = TRUE WHERE username = $1 AND pickup = $2 AND dropoff = $3 AND ride_date = $4 AND start_time = $5',
