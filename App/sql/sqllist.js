@@ -1,8 +1,8 @@
 // SQL query list to be used in the application
 module.exports = {
 
-    //create
-    add_user: 'INSERT INTO Users (uid, name, password, phone) VALUES($1, $2, $3, $4)',
+    // create
+    add_user: 'INSERT INTO Users (uid, name, password, phone, balance) VALUES($1, $2, $3, $4, $5)',
     add_driver: 'INSERT INTO Drivers VALUES ($1)',
     add_passenger: 'INSERT INTO Passengers VALUES ($1)',
     add_bankaccount: 'INSERT INTO BankAccounts VALUES ($1,$2)',
@@ -14,6 +14,32 @@ module.exports = {
     add_deal: 'INSERT INTO Deals (did,pid,rdate,rtime,atime) VALUES ($1,$2,$3,$4,$5)',
     add_evaluate: 'INSERT INTO Evaluates VALUES ($1,$2.$3,$4,$5,$6,$7,$8)',
     add_complain: 'INSERT INTO Complains VALUES ($1,$2,$3,$4,$5)',
+    
+    // retrieve
+    get_ride: 'SELECT * FROM Rides WHERE uid = $1 AND rdate = $2 AND rdate = $3',
+    get_bids_driver: 'SELECT * FROM Bids WHERE did = $1 AND is_pending = TRUE',
+    get_bids_passenger: 'SELECT * FROM Bids WHERE pid = $1',
+    check_password: 'SELECT uid FROM Users WHERE uid = $1 and password = $2',
+    get_account: 'SELECT * FROM Users WHERE uid = $1',
+    get_car: 'SELECT * FROM Owns AS O JOIN Cars AS C ON O.cid = C.plate WHERE O.uid = $1',
+    get_evaluations: 'SELECT * FROM Evaluates WHERE did = $1',
+ 
+    // update
+    add_balance: 'UPDATE Users SET balance = balance + $2 WHERE uid = $1',
+    delete_balance: 'UPDATE Users SET balance = balance - $2 WHERE uid = $1',
+    update_win_bid: 'UPDATE Bids SET is_pending = FALSE, is_win = TRUE WHERE did = $1 AND pid = $2 AND rdate = $3 AND rtime = $4',
+    update_other_bid: 'UPDATE Bids SET is_pending  = FALSE WHERE did = $1 AND rdate = $2 AND rtime = $3 AND is_win = FALSE',
+    update_deal_time: 'UPDATE Deals SET dtime = $4 WHERE did = $1 AND rdate = $2 AND rtime = $3',
+    update_ride_status: 'UPDATE Rides SET reached = TRUE WHERE did = $1 AND rdate = $2 AND rtime = $3',
+ 
+    // complex queries
+    // 1: get all rides before current time
+    get_all_rides: 'WITH X AS( SELECT * FROM Rides GROUP BY uid,rdate,rtime HAVING CAST (NOW() AS DATE)< rdate OR ( CAST (NOW() AS DATE)= rdate AND CAST (NOW() AS TIME)< rtime)) SELECT uid AS driver, rdate AS start_date, rtime AS start_time, origin, destination,capacity FROM X WHERE reached = FALSE ORDER BY uid',
+    // 2: auto select bid
+    auto_select: 'WITH X AS ( SELECT * FROM Bids WHERE did = $1 AND rdate = $2 AND rtime = $3 ORDER BY price DESC LIMIT 1) UPDATE Bids AS B SET is_win = TRUE, is_pending = FALSE FROM X WHERE B.did = X.did AND B.rdate = X.rdate AND B.rtime = X.rtime AND B.pid = X.pid',
+    // 3: rank all rides according to driver ranking or auto update balance
+ 
+
     
     
     // all_rides: 'SELECT * FROM RIDES WHERE is_complete = FALSE',
