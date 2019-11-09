@@ -18,9 +18,7 @@ const pool = new Pool({
 
 
 router.get('/', function(req, res, next) {
-	pool.query(sql_query.get_current_deal, [uid], (err, data) => {
-		res.render('viewStartedRide', { title: 'View Started Ride', data: data.rows });
-	});
+	res.render('viewStartedRide', { title: 'View Started Ride'});
 });
 
 module.exports = router;

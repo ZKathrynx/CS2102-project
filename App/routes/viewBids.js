@@ -24,4 +24,20 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+router.post('/', function(req, res, next) {
+	var passengerId = req.body.passengerId;
+	var rdate = req.body.rdate;
+	var rtime = req.body.rtime;
+	var uid = req.cookies["id"];
+	
+	// Construct Specific SQL Query
+	pool.query(sql_query.update_win_bid,[uid, passengerId, rdate, rtime], (err, data) => {	
+		pool.query(sql_query.update_other_bid, [uid, rdate, rtime], (err, data) => {
+			pool.query(sql_query.add_deal, [uid, passengerId, rdate, rtime], (err, data) => {
+				res.redirect('/driverFunctions');
+			});
+		});
+	});
+});
+
 module.exports = router;
