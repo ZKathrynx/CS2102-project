@@ -16,24 +16,26 @@ module.exports = {
     add_complain: 'INSERT INTO Complains VALUES ($1,$2,$3,$4,$5)',
     
     // retrieve
-    get_all_rides: 'WITH X AS( SELECT * FROM Rides GROUP BY uid,rdate,rtime HAVING CAST (NOW() AS DATE)< rdate OR ( CAST (NOW() AS DATE)= rdate AND CAST (NOW() AS TIME)< rtime)) SELECT uid AS driver, rdate AS start_date, rtime AS start_time, origin, destination,capacity FROM X WHERE reached = FALSE ORDER BY uid',
     get_ride: 'SELECT * FROM Rides WHERE uid = $1 AND rdate = $2 AND rdate = $3',
     get_bids: 'SELECT pid AS passenger, price FROM Bids WHERE did = $1 AND rdate = $2 AND rdate = $3',
     check_password: 'SELECT uid FROM Users WHERE uid = $1 and password = $2',
     get_account: 'SELECT * FROM Users WHERE uid = $1',
     get_car: 'SELECT * FROM Owns AS O JOIN Cars AS C ON O.cid = C.plate WHERE O.uid = $1',
-    
+    get_evaluation: 'SELECT * FROM Evaluates WHERE did = $1',
+
     // update
-    update_balance: 'UPDATE Users SET balance = balance + $2 WHERE uid = $1',
+    add_balance: 'UPDATE Users SET balance = balance + $2 WHERE uid = $1',
+    delete_balance: 'UPDATE Users SET balance = balance - $2 WHERE uid = $1',
+    update_win_bid: 'UPDATE Bids SET is_pending = FALSE AND is_win = TRUE WHERE did = $1 AND pid = $2 AND rdate = $3 AND rtime = $4',
+    update_other_bid: 'UPDATE Bids SET is_pending  = FALSE WHERE did = $1 AND rdate = $3 AND rtime = $4 AND is_win = FALSE',
 
 
     // complex queries
-    // 1: auto select bid
-    // 2: rank all rides according to driver ranking
-    // 3: select all rides where driver got no complain
+    // 1: get all rides before current time
+    get_all_rides: 'WITH X AS( SELECT * FROM Rides GROUP BY uid,rdate,rtime HAVING CAST (NOW() AS DATE)< rdate OR ( CAST (NOW() AS DATE)= rdate AND CAST (NOW() AS TIME)< rtime)) SELECT uid AS driver, rdate AS start_date, rtime AS start_time, origin, destination,capacity FROM X WHERE reached = FALSE ORDER BY uid',
+    // 2: auto select bid
+    // 3: rank all rides according to driver ranking
 
-	// check_user_is_admin: 'SELECT * FROM admin a WHERE a.username = $1', 
-	// check_driver_able_to_add_rides: 'SELECT * from verify v WHERE v.duname = $1 AND is_verified = TRUE', 
 	// approve_verified_driver: 'UPDATE verify SET auname = $1, is_verified = TRUE WHERE duname = $2', 
 	// check_driver_exists_and_verified: 'SELECT duname, is_verified FROM driver d, verify v WHERE d.username = v.duname AND d.username = $1 ', 
 	// check_driver_verified: 'SELECT * FROM verify WHERE duname = $1 and is_verified = TRUE',
