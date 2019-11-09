@@ -37,7 +37,7 @@ var driverFunctionsRouter = require('./routes/driverFunctions');
 var driverLoginRouter = require('./routes/driverLogin');
 var passengerLoginRouter = require('./routes/passengerLogin');
 var registerUserRouter = require('./routes/registerUser');
-
+var registerCarRouter = require('./routes/registerCar');
 // TODO:
 // bindBankAccount
 // addValue
@@ -50,7 +50,10 @@ var registerUserRouter = require('./routes/registerUser');
 // searchForRide
 // viewBidStatus
 // viewCurrentRide
-var viewAccountRouter = require('./routes/viewAccount')
+var viewAccountRouter = require('./routes/viewAccount');
+var addValueRouter = require('./routes/addValue');
+
+var advertiseRideRouter = require('./routes/advertiseRide');
 
 
 var app = express();
@@ -98,7 +101,7 @@ app.use('/driverFunctions', driverFunctionsRouter);
 app.use('/driverLogin', driverLoginRouter);
 app.use('/passengerLogin', passengerLoginRouter);
 app.use('/registerUser', registerUserRouter);
-
+app.use('/registerCar', registerCarRouter);
 // TODO:
 // bindBankAccount
 // addValue
@@ -111,7 +114,10 @@ app.use('/registerUser', registerUserRouter);
 // searchForRide
 // viewBidStatus
 // viewCurrentRide
-app.use('/viewAccount', viewAccountRouter)
+app.use('/viewAccount', viewAccountRouter);
+app.use('/addValue', addValueRouter);
+
+app.use('/advertiseRide', advertiseRideRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
