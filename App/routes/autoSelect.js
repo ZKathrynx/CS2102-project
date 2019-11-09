@@ -25,4 +25,15 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+router.post('/', function(req, res, next) {
+    // Retrieve Information
+    var rdate = req.body.rdate;
+    var rtime  = req.body.rtime;
+	var uid = req.cookies["id"];
+	
+	pool.query(sql_query.auto_select, [uid, rdate, rtime], (err, data) => {
+		res.redirect('/autoSelectResult')
+    });
+});
+
 module.exports = router;

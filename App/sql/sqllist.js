@@ -30,7 +30,7 @@ module.exports = {
     update_win_bid: 'UPDATE Bids SET is_pending = FALSE, is_win = TRUE WHERE did = $1 AND pid = $2 AND rdate = $3 AND rtime = $4',
     update_other_bid: 'UPDATE Bids SET is_pending  = FALSE WHERE did = $1 AND rdate = $2 AND rtime = $3 AND is_win = FALSE',
     update_start_time: 'UPDATE Deals SET dtime = CAST (NOW() AS TIME) WHERE did = $1 AND rdate = $2 AND rtime = $3',
-    update_ride_status: 'UPDATE Rides SET reached = TRUE WHERE did = $1 AND rdate = $2 AND rtime = $3',
+    update_ride_status: 'UPDATE Rides SET reached = TRUE WHERE uid = $1 AND rdate = $2 AND rtime = $3',
     get_current_deal: 'SELECT R.uid, R.rdate, R.rtime, R.origin, R.destination, R.capacity, B.price, D.atime FROM Rides AS R, Bids AS B, Deals AS D WHERE R.uid = B.did AND B.did = D.did AND R.rdate = B.rdate AND B.rdate = D.rdate AND R.rtime = B.rtime AND B.rtime = D.rtime AND B.pid = $1 AND B.is_win AND R.reached = FALSE',
 
     // complex queries
