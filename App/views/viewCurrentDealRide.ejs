@@ -43,5 +43,20 @@
 				<% } %>
             </tbody>	  
 		</table>
+		<form id="html_form" action="viewCurrentDealRide" role="form" method="post">
+			<div class="form-group">
+				<label for="driverId">Driver ID</label>
+				<input type="text" class="form-control" id="driverId" name="driverId" aria-describedby="driverIdHelp" placeholder="Enter Driver ID">
+			</div>
+			<div class="form-group">
+				<label for="rdate">Start Date</label>
+				<input type="text" class="form-control" id="rdate" name="rdate" placeholder="Enter Start Date">
+			</div>
+			<div class="form-group">
+				<label for="rtime">Start Time</label>
+				<input type="text" class="form-control" id="rtime" name="rtime" placeholder="Enter Start Time">
+			</div>
+			<button type="submit" class="btn btn-primary">Start Trip</button>
+		</form>
   </body>
 </html>
