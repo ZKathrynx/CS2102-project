@@ -18,6 +18,7 @@ const pool = new Pool({
 
 
 router.get('/', function(req, res, next) {
+	var uid = req.cookies["id"];
 	pool.query(sql_query.get_evaluations, [uid], (err, data) => {
 		res.render('viewEvaluations', { title: 'Database Connect', data: data.rows });
 	});

@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
 	var input_bId = req.body.bankId;
     var input_bname = req.body.bname;
-   
+   var input_userId = req.cookies["id"];
 	//balance: assign default value
     pool.query(sql_query.add_bankaccount,[input_bId, input_bname], (err, data) => {
 		if (err) {

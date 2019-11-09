@@ -28,7 +28,7 @@ router.post('/', function(req, res, next) {
 	var origin  = req.body.origin;
 	var destination = req.body.destination;
 	var max = req.body.max;
-	
+	var uid = req.cookies["id"];
 	pool.query(sql_query.add_ride [uid, rdate, rtime, origin, destination, max], (err, data) => {
         res.redirect('/viewBids')
     });
