@@ -14,38 +14,30 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
 		<!-- ADDED JavaScript -->
-		<script src="javascripts/insertScript.js"></script>
+		<script src="javascripts/addValueScript.js"></script>
   </head>
   <body>
-    <h1>Carpool System: <%= title%></h1>
-		<form id="html_form" action="advertiseRide" role="form" method="post">
+    <h1>CS2102: <%= title%></h1>
+		<form id="add_amount_form" action="addValueFromPassenger" role="form" method="post">
 			<div class="form-group">
-				<label for="rdate">Ride Date:</label>
-				<input type="text" class="form-control" id="rdate" name="rdate" aria-describedby="rdateHelp" placeholder="Enter your ride date">
+				<label for="Amount">Amount to be added</label>
+				<input type="text" class="form-control" id="amount" name="amount" aria-describedby="amountHelp" placeholder="Enter amount to be added">
 			</div>
 			<div class="form-group">
-				<label for="rtime">Ride Time:</label>
-				<input type="text" class="form-control" id="rtime" name="rtime" aria-describedby="rtimeHelp" placeholder="Enter your ride start time">
+				<label for="bankId">Bank Account Number</label>
+				<input type="text" class="form-control" id="bankId" name="bankId" aria-describedby="bankIdHelp" placeholder="Enter your bank account number">
 			</div>
 			<div class="form-group">
-				<label for="origin">Origin:</label>
-				<input type="text" class="form-control" id="origin" name="origin" aria-describedby="originHelp" placeholder="Enter your origin">
+				<label for="Amount">cvv code</label>
+				<input type="text" class="form-control" id="cvv" name="cvv" aria-describedby="cvvHelp" placeholder="Enter cvv code to verify your identity">
 			</div>
-			<div class="form-group">
-				<label for="destination">Destination:</label>
-				<input type="text" class="form-control" id="destination" name="destination" aria-describedby="destinationHelp" placeholder="Enter your destination.">
-			</div>
-			<div class="form-group">
-				<label for="max">Maximum Capacity</label>
-				<input type="text" class="form-control" id="max" name="max" aria-describedby="maxHelp" placeholder="Enter your maximum capacity)">
-			</div>
-			<button type="submit" class="btn btn-primary">Advertise Ride</button>
+			<button type="submit" class="btn btn-primary">Add Value</button>
 		</form>
 		
 		<script>
 			(function() {
 				window.addEventListener('load', function() {
-					var forms = [document.getElementById('html_form')];
+					var forms = [document.getElementById('add_amount_form')];
 					var validation = Array.prototype.filter.call(forms, function(form) {
 						form.addEventListener('submit', check, false);
 					});
