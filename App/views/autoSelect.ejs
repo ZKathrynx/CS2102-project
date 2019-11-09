@@ -18,32 +18,26 @@
 		<table class="table">
             <thead>
 				<tr>
-					<th scope="col">Driver ID</th>
+					<th scope="col">Passenger ID</th>
 					<th scope="col">Ride Date</th>
                     <th scope="col">Ride Time</th>
-                    <th scope="col">Origin</th>
-					<th scope="col">Destinations</th>
-                    <th scope="col">Max Capacity</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Accept Bid Time</th>
+                    <th scope="col">Offered Price</th>
+					<th scope="col">Pending</th>
+                    <th scope="col">Win</th>
 				</tr>
 			</thead>
 			<tbody>
 				<% for(var i=0; i<data.length; i++) { %>
 				<tr>
-					<td><%= data[i].uid%></td>
+					<td><%= data[i].did%></td>
 					<td><%= data[i].rdate%></td>
                     <td><%= data[i].rtime%></td>
-                    <td><%= data[i].origin%></td>
-					<td><%= data[i].destination%></td>
-                    <td><%= data[i].max%></td>
                     <td><%= data[i].price%></td>
-                    <td><%= data[i].atime%></td>
+					<td><%= data[i].is_pending%></td>
+                    <td><%= data[i].is_win%></td>
 				</tr>
 				<% } %>
             </tbody>	  
-		</table>
-		<button type="button" onclick="window.location.href='/complain'" class="btn btn-primary">Complain</button>
-		<button type="button" onclick="window.location.href='/evaluate'" class="btn btn-primary">End Trip</button>
+        </table>
   </body>
 </html>
