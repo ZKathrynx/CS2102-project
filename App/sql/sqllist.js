@@ -11,7 +11,7 @@ module.exports = {
     add_own: 'INSERT INTO Owns VALUES($1,$2)',
     add_bid: 'INSERT INTO Bids (did,pid,rdate,rtime,price) VALUES ($1,$2,$3,$4,$5)',
     add_ride: 'INSERT INTO Rides VALUES ($1,$2,$3,$4,$5,$6)',
-    add_deal: 'INSERT INTO Deals (did,pid,rdate,rtime,atime) VALUES ($1,$2,$3,$4,$5)',
+    add_deal: 'INSERT INTO Deals (did,pid,rdate,rtime,atime) VALUES ($1,$2,$3,$4,CAST (NOW() AS TIME))',
     add_evaluate: 'INSERT INTO Evaluates VALUES ($1,$2.$3,$4,$5,$6,$7,$8)',
     add_complain: 'INSERT INTO Complains VALUES ($1,$2,$3,$4,$5)',
     
