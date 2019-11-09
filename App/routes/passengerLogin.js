@@ -14,9 +14,11 @@ const pool = new Pool({
 	connectionString: process.env.DATABASE_URL
 })
 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('passengerLogin', { title: 'Passenger Login' });
+	res.clearCookie("id", { httpOnly: true });
+    res.render('passengerLogin', { title: 'Passenger Login' });
 });
 
 router.post('/', function(req, res, next) {
@@ -30,7 +32,7 @@ router.post('/', function(req, res, next) {
 		res.redirect('/errorOccur');
         //alert("Login failed! Invalid user ID or password")
     } else {
-		console.log('hahahah');
+		res.cookie("id", input_id, { httpOnly: true });
 		res.redirect('/passengerFunctions');
   	}
 		
