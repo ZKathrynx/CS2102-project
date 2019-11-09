@@ -34,6 +34,17 @@ router.post('/', function(req, res, next) {
 	// pool.query(insert_query, (err, data) => {
 	// 	res.redirect('/select')
 	// });
+	var input_amount = req.body.amount;
+
+	// Construct Specific SQL Query
+	pool.query(sql_query.add_balance,[input_userId, input_amount], (err, data) => {	
+    if (err) {
+		res.redirect('/errorOccur');
+        //alert("Login failed! Invalid user ID or password")
+    } else {
+		  res.redirect('/driverFunctions');
+  	}
+	});
 });
 
 module.exports = router;
