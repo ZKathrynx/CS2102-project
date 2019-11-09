@@ -25,24 +25,54 @@ router.post('/', function(req, res, next) {
 	var userid  = req.body.userid;
 	var username    = req.body.username;
 	var password = req.body.password;
+	var balance = req.body.balance;
 	var phoneNo = req.body.phoneNo;
-	var userType = req.body.userType.toLowerCase();
+	var userType = req.body.userType;
 	
 	if(userType == "driver") {
-		pool.query(sql_query.addUser, [userid, username, password, phoneNo], (err, data))
-		pool.query(sql_query.addDriver, [userid], (err, data))
-		res.redirect('/registerCar')
+		pool.query(sql_query.add_user, [userid, username, password, phoneNo, balance], (err, data) => {
+			if(err){
+				throw err
+			}
+			pool.query(sql_query.add_driver, [userid], (err, data) => {
+				if(err){
+					throw err
+				}
+				res.redirect('/registerCar');
+			});
+	});
 	} else if (userType == "passenger") {
-		pool.query(sql_query.addUser, [userid, username, password, phoneNo], (err, data))
-		pool.query(sql_query.addDriver, [userid], (err, data))
-		res.redirect('/passengerFunctions')
+		pool.query(sql_query.add_user, [userid, username, password, phoneNo, balance], (err, data) => {
+			if(err){
+				throw err
+			}
+			pool.query(sql_query.add_passenger, [userid], (err, data) => {
+				if(err){
+					throw err
+				}
+				res.redirect('/passengerFunctions');
+			});
+	});
 	} else if (userType == "both") {
-		pool.query(sql_query.addUser, [userid, username, password, phoneNo], (err, data)) 
-		pool.query(sql_query.addDriver, [userid], (err, data))
-		pool.query(sql_query.addDriver, [userid], (err, data))
-		res.redirect('/registerCar')
+		pool.query(sql_query.add_user, [userid, username, password, phoneNo, balance], (err, data) => {
+			if(err){
+				throw err
+			}
+			pool.query(sql_query.add_driver, [userid], (err, data) => {
+				if(err){
+					throw err
+				}
+			});
+			pool.query(sql_query.add_passenger, [userid], (err, data) => {
+				if(err){
+					throw err
+				}
+				res.redirect('/registerCar');
+			});
+	});
 	} else {
-		alert("Invalid User Type!")
+		console.log("Invalid User Type!");
+		res.redirect('/registerUser');
 	}
 	
 });

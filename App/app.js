@@ -37,7 +37,7 @@ var driverFunctionsRouter = require('./routes/driverFunctions');
 var driverLoginRouter = require('./routes/driverLogin');
 var passengerLoginRouter = require('./routes/passengerLogin');
 var registerUserRouter = require('./routes/registerUser');
-
+var registerCarRouter = require('./routes/registerCar');
 // TODO:
 // bindBankAccount
 // addValue
@@ -101,7 +101,7 @@ app.use('/driverFunctions', driverFunctionsRouter);
 app.use('/driverLogin', driverLoginRouter);
 app.use('/passengerLogin', passengerLoginRouter);
 app.use('/registerUser', registerUserRouter);
-
+app.use('/registerCar', registerCarRouter);
 // TODO:
 // bindBankAccount
 // addValue
