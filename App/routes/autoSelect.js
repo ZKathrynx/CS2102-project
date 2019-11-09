@@ -20,10 +20,7 @@ const pool = new Pool({
 router.get('/', function(req, res, next) {
 	res.clearCookie("rdate", { httpOnly: true });
 	res.clearCookie("rtime", { httpOnly: true });
-	var did = req.cookies["id"];
-	pool.query(sql_query.auto_select, [did, rdate, rtime], (err, data) => {
-		res.render('autoSelect', { title: 'Auto Select', data: data.rows });
-	});
+	res.render('autoSelect', { title: 'Auto Select', data: data.rows });
 });
 
 router.post('/', function(req, res, next) {
@@ -31,7 +28,6 @@ router.post('/', function(req, res, next) {
     var rdate = req.body.rdate;
     var rtime  = req.body.rtime;
 	var uid = req.cookies["id"];
-	
 	pool.query(sql_query.auto_select, [uid, rdate, rtime], (err, data) => {
 		res.cookie("rdate", rdate, { httpOnly: true });
 		res.cookie("rtime", rtime, { httpOnly: true });
