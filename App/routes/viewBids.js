@@ -20,7 +20,19 @@ const pool = new Pool({
 router.get('/', function(req, res, next) {
 	var did = req.cookies["id"];
 	pool.query(sql_query.get_bids_driver, [did], (err, data) => {
-		res.render('viewBids', { title: 'Database Connect', data: data.rows });
+		res.render('viewBids', { title: 'View Bids', data: data.rows });
+	});
+});
+
+router.post('/', function(req, res, next) {
+	var passengerId = req.body.passengerId;
+	var rdate = req.body.rdate;
+	var rtime = req.body.rtime;
+	var uid = req.cookies["id"];
+	
+	// Construct Specific SQL Query
+	pool.query(sql_query.update_win_bid,[uid, passengerId, rdate, rtime], (err, data) => {	
+		res.redirect('/driverFunctions');
 	});
 });
 
