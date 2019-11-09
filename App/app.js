@@ -62,14 +62,13 @@ var evaluateRouter = require('./routes/evaluate');
 // viewAllEvaluation
 // viewBid
 
-// searchForRide
+// searchRide
 // viewBidStatus
 // viewCurrentRide
 var viewAccountRouter = require('./routes/viewAccount');
-var addValueRouter = require('./routes/addValue');
-
+var addValueFromDriverRouter = require('./routes/addValueFromDriver');
+var addValueFromPassengerRouter = require('./routes/addValueFromPassenger');
 var advertiseRideRouter = require('./routes/advertiseRide');
-
 
 var app = express();
 
@@ -140,12 +139,12 @@ app.use(cookieParser());
 // viewAllEvaluation
 // viewBid
 
-// searchForRide
+// searchRide
 // viewBidStatus
 // viewCurrentRide
 app.use('/viewAccount', viewAccountRouter);
-app.use('/addValue', addValueRouter);
-
+app.use('/addValueFromDriver', addValueFromDriverRouter);
+app.use('/addValueFromPassenger', addValueFromPassengerRouter);
 app.use('/advertiseRide', advertiseRideRouter);
 
 // catch 404 and forward to error handler
