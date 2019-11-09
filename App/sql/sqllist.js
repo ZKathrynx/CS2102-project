@@ -38,7 +38,7 @@ module.exports = {
     // 1: get all rides before current time
     get_all_rides: 'WITH X AS( SELECT * FROM Rides GROUP BY uid,rdate,rtime HAVING CAST (NOW() AS DATE)< rdate OR ( CAST (NOW() AS DATE)= rdate AND CAST (NOW() AS TIME)< rtime)) SELECT uid AS driver, rdate AS start_date, rtime AS start_time, origin, destination,capacity FROM X WHERE reached = FALSE ORDER BY uid',
     // 2: auto select bid
-    auto_select: 'WITH X AS ( SELECT * FROM Bids WHERE did = $1 AND rdate = $2 AND rtime = $3 ORDER BY price DESC LIMIT 1) UPDATE Bids AS B SET is_win = TRUE, is_pending = FALSE FROM X WHERE B.did = X.did AND B.rdate = X.rdate AND B.rtime = X.rtime AND B.pid = X.pid',
+    auto_select: 'WITH X AS ( SELECT * FROM Bids WHERE did = $1 AND rdate = $2 AND rtime = $3 ORDER BY price DESC,pid ASC LIMIT 1) UPDATE Bids AS B SET is_win = TRUE, is_pending = FALSE FROM X WHERE B.did = X.did AND B.rdate = X.rdate AND B.rtime = X.rtime AND B.pid = X.pid',
     // 3: rank all rides according to driver ranking
     rank_drivers: 'WITH X AS ( SELECT D.uid FROM Drivers AS D WHERE D.uid IN ( SELECT R.uid FROM Rides AS R WHERE R.reached = FALSE )), Y AS ( SELECT E.did, AVG(rank) AS avgrank FROM Evaluates AS E GROUP BY E.did ) SELECT X.uid FROM X, Y WHERE X.uid = Y.did ORDER BY Y.avgrank DESC;'
     
