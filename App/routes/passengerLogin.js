@@ -25,12 +25,14 @@ router.post('/', function(req, res, next) {
 	
 	// Construct Specific SQL Query
 	
-	pool.query(sql_query.userpass, [uid, password], (err, data) => {
-		if (data.rows[0] == undefined) {
-			alert("Login failed! Invalid user ID or password.")
-		} else {
-			res.redirect('/passengerFunction')
-		};
+	pool.query(sql_query.check_password, [input_id, input_password], (err, data) => {
+	if (data.rows[0] == undefined) {
+		res.redirect('/errorOccur');
+        //alert("Login failed! Invalid user ID or password")
+    } else {
+		console.log('hahahah');
+		res.redirect('/passengerFunctions');
+  	}
 		
 	});
 });
