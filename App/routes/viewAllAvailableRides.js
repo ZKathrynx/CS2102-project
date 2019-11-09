@@ -23,4 +23,16 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+router.post('/', function(req, res, next) {
+	var driverId = req.body.driverId;
+	var rdate = req.body.rdate;
+	var rtime = req.body.rtime;
+	var price = req.body.price;
+	var uid = req.cookies["id"];
+	// Construct Specific SQL Query
+	pool.query(sql_query.add_bid,[driverId, uid, rdate, rtime, price], (err, data) => {	
+		res.redirect('/viewBidStatus');
+	});
+});
+
 module.exports = router;
