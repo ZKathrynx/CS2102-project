@@ -2,7 +2,7 @@
 <html>
   <head>
 		<!-- Page Title -->
-    <title>CS2102 About Page</title>
+    <title>CS2102 Database Connect</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 		
 		<!-- CSS for Styling -->
@@ -14,13 +14,30 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>CS2102 <%= title%> Page</h1>
-    <p>Here are the functions for a driver.</p>
+    <h1><%= title%></h1>
+		<table class="table">
+            <thead>
+				<tr>
+					<th scope="col">Driver ID</th>
+					<th scope="col">Ride Date</th>
+                    <th scope="col">Ride Time</th>
+                    <th scope="col">Offered Price</th>
+					<th scope="col">Pending</th>
+                    <th scope="col">Win</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% for(var i=0; i<data.length; i++) { %>
+				<tr>
+					<td><%= data[i].did%></td>
+					<td><%= data[i].rdate%></td>
+                    <td><%= data[i].rtime%></td>
+                    <td><%= data[i].price%></td>
+					<td><%= data[i].is_pending%></td>
+                    <td><%= data[i].is_win%></td>
+				</tr>
+				<% } %>
+            </tbody>	  
+		</table>
   </body>
-  <button type="button" onclick="window.location.href='/viewAccount'" class="btn btn-primary">View My Account</button>
-  <button type="button" onclick="window.location.href='/bindBankAccountFromDriver'" class="btn btn-primary">Bind Bank Account</button>
-  <button type="button" onclick="window.location.href='/addValue'" class="btn btn-primary">Add Value</button>
-  <button type="button" onclick="window.location.href='/advertiseRide'" class="btn btn-primary">Advertise a new Ride</button>
-  <button type="button" onclick="window.location.href='/viewEvaluations'" class="btn btn-primary">View All Evaluations</button>
-  <button type="button" onclick="window.location.href='/viewBids'" class="btn btn-primary">View All Bids</button>
 </html>
