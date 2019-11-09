@@ -24,10 +24,15 @@ router.post('/', function(req, res, next) {
 	var input_plateNumber = req.body.plateNumber;
 	var input_type = req.body.type;
 	var input_model = req.body.model;
-	
+	var input_userId = req.cookies["id"];
 	// Construct Specific SQL Query
-	pool.query(sql_query.add_car,[input_plateNumber, input_type, input_model], (err, data) => {	
-		res.redirect('/driverFunctions')
+	pool.query(sql_query.add_car,[input_plateNumber, input_type, input_model], (err, data) => {
+		pool.query(sql_query.add_own,[input_userId, input_plateNumber], (err, data) => {
+			if (err) {
+				throw err
+			}
+			res.redirect('/driverFunctions')
+		});
 	});
 });
 
