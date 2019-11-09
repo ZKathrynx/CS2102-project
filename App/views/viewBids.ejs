@@ -39,7 +39,24 @@
 				<% } %>
             </tbody>	  
         </table>
+        <h2>Auto Select</h2>
         <button type="button" onclick="window.location.href='/autoSelect'" class="btn btn-primary">Auto-Select</button>
-
+        <p></p>
+        <h2>Manually Select</h2>
+        <form id="html_form" action="viewBids" role="form" method="post">
+			<div class="form-group">
+				<label for="passengerId">Passenger ID</label>
+				<input type="text" class="form-control" id="passengerId" name="passengerId" aria-describedby="passengerIdHelp" placeholder="Enter Passenger ID">
+			</div>
+			<div class="form-group">
+				<label for="rdate">Start Date</label>
+				<input type="text" class="form-control" id="rdate" name="rdate" placeholder="Enter Start Date">
+			</div>
+			<div class="form-group">
+				<label for="rtime">Start Time</label>
+				<input type="text" class="form-control" id="rtime" name="rtime" placeholder="Enter Start Time">
+			</div>
+			<button type="submit" class="btn btn-primary">Select</button>
+		</form>
   </body>
 </html>
