@@ -17,7 +17,7 @@ const pool = new Pool({
 
 // GET
 router.get('/', function(req, res, next) {
-	res.render('registerUser', { title: 'Creating Account' });
+	res.render('advertiseRide', { title: 'Advertise Ride' });
 });
 
 // POST
@@ -29,8 +29,8 @@ router.post('/', function(req, res, next) {
 	var destination = req.body.destination;
 	var max = req.body.max;
 	var uid = req.cookies["id"];
-	pool.query(sql_query.add_ride [uid, rdate, rtime, origin, destination, max], (err, data) => {
-        res.redirect('/viewBids')
+	pool.query(sql_query.add_ride,[uid, rdate, rtime, origin, destination, max], (err, data) => {
+        res.redirect('/viewBids');
     });
 });
 
