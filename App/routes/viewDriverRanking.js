@@ -19,7 +19,7 @@ const pool = new Pool({
 
 router.get('/', function(req, res, next) {
 	pool.query(sql_query.rank_drivers, (err, data) => {
-		res.render('viewDriverRating', { title: 'Database Connect', data: data.rows });
+		res.render('viewDriverRanking', { title: 'Database Connect', data: data.rows });
 	});
 });
 

@@ -17,7 +17,7 @@ const pool = new Pool({
 
 // GET
 router.get('/', function(req, res, next) {
-	res.render('complain', { title: 'Evaluate' });
+	res.render('complain', { title: 'Complain' });
 });
 
 // POST

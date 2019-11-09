@@ -48,6 +48,8 @@ var viewDriverRankingRouter = require('./routes/viewDriverRanking');
 var viewEvaluationsRouter = require('./routes/viewEvaluations');
 var advertiseRideRouter = require('./routes/advertiseRide');
 var viewBidsRouter = require('./routes/viewBids');
+var complainRouter = require('./routes/complain');
+var evaluateRouter = require('./routes/evaluate');
 // TODO:
 // bindBankAccount
 // addValue
@@ -122,6 +124,8 @@ app.use('/viewDriverRanking', viewDriverRankingRouter);
 app.use('/viewEvaluations', viewEvaluationsRouter);
 app.use('/advertiseRide', advertiseRideRouter);
 app.use('/viewBids', viewBidsRouter);
+app.use('/complain', complainRouter);
+app.use('/evaluate', evaluateRouter);
 // TODO:
 // bindBankAccount
 // addValue
