@@ -11,7 +11,7 @@
 
 2. open psql shell
 
-3. copy all lines from /pgsqscript.sql to psql shell
+3. copy all lines from /psqlscript.sql to psql shell
 
 ### run server
 1. download nodejs

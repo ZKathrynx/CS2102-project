@@ -19,6 +19,9 @@ module.exports = {
     get_ride: 'SELECT * FROM Rides WHERE uid = $1 AND rdate = $2 AND rdate = $3',
     get_bids_driver: 'SELECT * FROM Bids WHERE did = $1 AND is_pending = TRUE',
     get_bids_passenger: 'SELECT * FROM Bids WHERE pid = $1',
+    get_win_bid: 'SELECT pid FROM Bids WHERE did = $1 AND rdate = $2 AND rtime = $3 AND is_win',
+    get_current_deal: 'SELECT R.uid, R.rdate, R.rtime, R.origin, R.destination, R.capacity, B.price, D.atime FROM Rides AS R, Bids AS B, Deals AS D WHERE R.uid = B.did AND B.did = D.did AND R.rdate = B.rdate AND B.rdate = D.rdate AND R.rtime = B.rtime AND B.rtime = D.rtime AND B.pid = $1 AND B.is_win AND R.reached = FALSE',
+    get_deal: 'SELECT D.pid, R.rdate, R.rtime, R.origin, R.destination, B.price, D.atime FROM Rides AS R, Bids AS B, Deals AS D WHERE R.uid = $1 AND R.uid = B.did AND B.did = D.did AND R.rdate = $2 AND R.rdate = B.rdate AND B.rdate = D.rdate AND R.rtime = $3 AND R.rtime = B.rtime AND B.rtime = D.rtime AND B.is_win',
     check_password: 'SELECT uid FROM Users WHERE uid = $1 and password = $2',
     get_account: 'SELECT * FROM Users WHERE uid = $1',
     get_car: 'SELECT * FROM Owns AS O JOIN Cars AS C ON O.cid = C.plate WHERE O.uid = $1',
@@ -31,9 +34,7 @@ module.exports = {
     update_other_bid: 'UPDATE Bids SET is_pending  = FALSE WHERE did = $1 AND rdate = $2 AND rtime = $3 AND is_win = FALSE',
     update_start_time: 'UPDATE Deals SET dtime = CAST (NOW() AS TIME) WHERE did = $1 AND rdate = $2 AND rtime = $3',
     update_ride_status: 'UPDATE Rides SET reached = TRUE WHERE uid = $1 AND rdate = $2 AND rtime = $3',
-    get_current_deal: 'SELECT R.uid, R.rdate, R.rtime, R.origin, R.destination, R.capacity, B.price, D.atime FROM Rides AS R, Bids AS B, Deals AS D WHERE R.uid = B.did AND B.did = D.did AND R.rdate = B.rdate AND B.rdate = D.rdate AND R.rtime = B.rtime AND B.rtime = D.rtime AND B.pid = $1 AND B.is_win AND R.reached = FALSE',
-    get_deal: 'SELECT D.pid, R.rdate, R.rtime, R.origin, R.destination, B.price, D.atime FROM Rides AS R, Bids AS B, Deals AS D WHERE R.uid = $1 AND R.uid = B.did AND B.did = D.did AND R.rdate = $2 AND R.rdate = B.rdate AND B.rdate = D.rdate AND R.rtime = $3 AND R.rtime = B.rtime AND B.rtime = D.rtime AND B.is_win',
-
+    
     // complex queries
     // 1: get all rides before current time
     get_all_rides: 'WITH X AS( SELECT * FROM Rides GROUP BY uid,rdate,rtime HAVING CAST (NOW() AS DATE)< rdate OR ( CAST (NOW() AS DATE)= rdate AND CAST (NOW() AS TIME)< rtime)) SELECT uid AS driver, rdate AS start_date, rtime AS start_time, origin, destination,capacity FROM X WHERE reached = FALSE ORDER BY uid',
