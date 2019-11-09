@@ -16,7 +16,7 @@ uid INTEGER,
 name VARCHAR(20) NOT NULL,
 password VARCHAR(50) NOT NULL,
 phone VARCHAR(20) NOT NULL,
-balance NUMERIC NOT NULL,
+balance NUMERIC DEFAULT 0,
 PRIMARY KEY (uid)
 );
  
@@ -33,15 +33,15 @@ PRIMARY KEY (uid)
 CREATE TABLE BankAccounts (
 bid INTEGER,
 bname VARCHAR(20) NOT NULL,
-balance NUMERIC NOT NULL,
+balance NUMERIC DEFAULT 49.99,
 PRIMARY KEY (bid)
 );
  
 CREATE TABLE Cars (
-pid INTEGER,
+plate INTEGER,
 type VARCHAR(20),
 model VARCHAR(20),
-PRIMARY KEY (pid)
+PRIMARY KEY (plate)
 );
  
 CREATE TABLE Rides (
@@ -50,7 +50,8 @@ rdate DATE,
 rtime TIME,
 origin VARCHAR(30) NOT NULL,
 destination VARCHAR(30) NOT NULL,
-max INTEGER NOT NULL,
+capacity INTEGER NOT NULL,
+reached BOOLEAN DEFAULT FALSE,
 PRIMARY KEY (uid, rdate, rtime),
 FOREIGN KEY(uid) REFERENCES Drivers ON DELETE cascade
 );
@@ -88,12 +89,11 @@ pid INTEGER,
 rdate DATE,
 rtime TIME,
 price NUMERIC NOT NULL,
+is_pending BOOLEAN DEFAULT TRUE,
 is_win BOOLEAN DEFAULT FALSE,
 PRIMARY KEY (did, pid, rdate, rtime),
-FOREIGN KEY (did) REFERENCES Drivers(uid),
 FOREIGN KEY (pid) REFERENCES Passengers(uid),
-FOREIGN KEY (rdate) REFERENCES Rides,
-FOREIGN KEY (rtime) REFERENCES Rides
+FOREIGN KEY (did,rdate,rtime) REFERENCES Rides(uid,rdate,rtime)
 );
  
 CREATE TABLE Deals (
@@ -102,31 +102,70 @@ pid INTEGER NOT NULL,
 rdate DATE,
 rtime TIME,
 atime TIME NOT NULL,
-dtime TIME NOT NULL,
+dtime TIME DEFAULT NULL,
 PRIMARY KEY (did, rdate, rtime),
-FOREIGN KEY (did) REFERENCES Drivers(uid),
-FOREIGN KEY (pid) REFERENCES Passengers(uid),
-FOREIGN KEY (rdate) REFERENCES Rides,
-FOREIGN KEY (rtime) REFERENCES Rides
+FOREIGN KEY (did, pid, rdate, rtime) REFERENCES Bids(did, pid, rdate, rtime)
 );
  
 CREATE TABLE Evaluates (
 did INTEGER,
-pid INTEGER NOT NULL,
+pid INTEGER,
 rdate DATE,
 rtime TIME,
 edate DATE NOT NULL,
 etime TIME NOT NULL,
 rank INTEGER NOT NULL,
 comment VARCHAR(100),
-PRIMARY KEY (did, rdate, rtime),
-FOREIGN KEY (did) REFERENCES Drivers(uid),
-FOREIGN KEY (pid) REFERENCES Passengers(uid),
-FOREIGN KEY (rdate) REFERENCES Rides,
-FOREIGN KEY (rtime) REFERENCES Rides
+PRIMARY KEY (did, pid, rdate, rtime),
+FOREIGN KEY (did, rdate, rtime) REFERENCES Deals(did, rdate, rtime),
+FOREIGN KEY (pid) REFERENCES Passengers(uid)
 );
 
+--TRIGGER 1: update old bid
+CREATE OR REPLACE FUNCTION check_bid ()
+RETURNS TRIGGER AS $$
+	DECLARE count NUMERIC;
+	BEGIN
+	SELECT COUNT(*) INTO count FROM Bids b
+	WHERE NEW.did = b.did AND
+	NEW.pid = b.pid AND
+	NEW.rdate = b.rdate AND
+	NEW.rtime = b.rtime;
+	IF count > 0 THEN 
+	RETURN UPDATE (OLD.did, OLD.pid, OLD.rdate, OLD.rtime, NEW.price);
+	ELSE RETURN NEW;
+	END IF;
+	END; 
+$$ LANGUAGE plpgsql;
 
+CREATE TRIGGER check_update_bid
+BEFORE INSERT OR UPDATE ON Bids
+EXECUTE PROCEDURE check_bid();
+
+--TRIGGER 2: update old ride
+
+CREATE OR REPLACE FUNCTION check_ride() 
+RETURNS TRIGGER AS $$
+	DECLARE count NUMERIC;
+	BEGIN 
+	SELECT COUNT(*) INTO count FROM Rides r
+	WHERE NEW.uid = r.uid AND NEW.rdate = r.rdate AND NEW.rtime = r.rtime;
+	IF count> 0 THEN
+	RETURN UPDATE (OLD.uid, OLD.rdate, OLD.rtime, NEW.origin, NEW.destination, NEW.capacity);
+	ELSE RETURN NEW;
+	END IF;
+	END; 
+$$ LANGUAGE plpgsql; 
+
+CREATE TRIGGER check_update_ride
+BEFORE INSERT OR UPDATE ON Rides 
+EXECUTE PROCEDURE check_ride();
+
+
+--possible TRIGGER 3: 
+
+
+--dummy date
 INSERT INTO Users VALUES ('1', 'A', 'passwordA', 'phoneA', '1000.0');
 INSERT INTO Users VALUES ('2', 'B', 'passwordB', 'phoneB', '2000.0');
 INSERT INTO Users VALUES ('3', 'C', 'passwordC', 'phoneC', '3000.0');
@@ -174,15 +213,6 @@ INSERT INTO Cars VALUES ('4', 'CarD', 'ModelD');
 INSERT INTO Cars VALUES ('5', 'CarE', 'ModelE');
 INSERT INTO Cars VALUES ('6', 'CarF', 'ModelF');
 
-INSERT INTO Rides VALUES ('1', '1-1-2019', '00:00:00', 'NUS', 'NTU', '4');
-INSERT INTO Rides VALUES ('2', '1-1-2019', '00:00:00', 'NUS', 'NTU', '4');
-INSERT INTO Rides VALUES ('3', '1-1-2019', '01:00:00', 'NUS', 'NTU', '4');
-INSERT INTO Rides VALUES ('4', '1-1-2019', '02:00:00', 'NUS', 'NTU', '4');
-INSERT INTO Rides VALUES ('5', '1-1-2019', '03:00:00', 'NUS', 'NTU', '4');
-INSERT INTO Rides VALUES ('6', '1-1-2019', '04:00:00', 'NUS', 'NTU', '4');
-INSERT INTO Rides VALUES ('4', '1-1-2019', '01:00:00', 'NUS', 'NTU', '4');
-INSERT INTO Rides VALUES ('6', '1-1-2019', '01:00:00', 'NUS', 'NTU', '4');
-
 INSERT INTO Binds VALUES ('1', '1');
 INSERT INTO Binds VALUES ('2', '2');
 INSERT INTO Binds VALUES ('3', '3');
@@ -201,82 +231,51 @@ INSERT INTO Owns VALUES ('4', '4');
 INSERT INTO Owns VALUES ('5', '5');
 INSERT INTO Owns VALUES ('6', '6');
 
-INSERT INTO Complains VALUES ('1', '10', '1-1-2019', '00:10:00', 'ComplainA');
-INSERT INTO Complains VALUES ('2', '9', '1-1-2019', '00:05:00', 'ComplainB');
-INSERT INTO Complains VALUES ('3', '8', '1-1-2019', '01:05:00', 'ComplainC');
-INSERT INTO Complains VALUES ('4', '7', '1-1-2019', '02:05:00', 'ComplainD');
-INSERT INTO Complains VALUES ('5', '6', '1-1-2019', '03:05:00', 'ComplainE');
-INSERT INTO Complains VALUES ('6', '5', '1-1-2019', '04:05:00', 'ComplainF');
-INSERT INTO Complains VALUES ('4', '10', '1-1-2019', '01:05:00', 'ComplainG');
-INSERT INTO Complains VALUES ('6', '9', '1-1-2019', '01:05:00', 'ComplainH');
+INSERT INTO Rides VALUES ('1', '2019-1-1', '00:00:00', 'NUS', 'NTU', '4');
+INSERT INTO Rides VALUES ('2', '2019-1-1', '00:00:00', 'NUS', 'NTU', '4');
+INSERT INTO Rides VALUES ('3', '2019-1-1', '01:00:00', 'NUS', 'NTU', '4');
+INSERT INTO Rides VALUES ('4', '2019-12-1', '02:00:00', 'NUS', 'NTU', '4');
+INSERT INTO Rides VALUES ('5', '2019-12-1', '03:00:00', 'NUS', 'NTU', '4');
+INSERT INTO Rides VALUES ('6', '2019-12-1', '04:00:00', 'NUS', 'NTU', '4');
+INSERT INTO Rides VALUES ('4', '2019-12-1', '01:00:00', 'NUS', 'NTU', '4');
+INSERT INTO Rides VALUES ('6', '2019-12-1', '01:00:00', 'NUS', 'NTU', '4');
+
+INSERT INTO Complains VALUES ('1', '10','2019-1-1', '00:10:00', 'ComplainA');
+INSERT INTO Complains VALUES ('2', '9', '2019-1-1', '00:05:00', 'ComplainB');
+INSERT INTO Complains VALUES ('3', '8', '2019-1-1', '01:05:00', 'ComplainC');
+INSERT INTO Complains VALUES ('4', '7', '2019-12-1', '02:05:00', 'ComplainD');
+INSERT INTO Complains VALUES ('5', '6', '2019-12-1', '03:05:00', 'ComplainE');
+INSERT INTO Complains VALUES ('6', '5', '2019-12-1', '04:05:00', 'ComplainF');
+INSERT INTO Complains VALUES ('4', '10','2019-12-1', '01:05:00', 'ComplainG');
+INSERT INTO Complains VALUES ('6', '9', '2019-12-1', '01:05:00', 'ComplainH');
 
 
-INSERT INTO Bids VALUES ('1', '10', '1-1-2019', '00:00:00', '1', 'TRUE');
-INSERT INTO Bids VALUES ('1', '9', '1-1-2019', '00:00:00', '0.5', 'FALSE');
-INSERT INTO Bids VALUES ('2', '9', '1-1-2019', '00:00:00', '2', 'TRUE');
-INSERT INTO Bids VALUES ('2', '8', '1-1-2019', '00:00:00', '1', 'FALSE');
-INSERT INTO Bids VALUES ('3', '8', '1-1-2019', '01:00:00',  '2', 'TRUE');
-INSERT INTO Bids VALUES ('4', '7', '1-1-2019', '02:00:00',  '2', 'TRUE');
-INSERT INTO Bids VALUES ('5', '6', '1-1-2019', '03:00:00',  '2', 'TRUE');
-INSERT INTO Bids VALUES ('6', '5', '1-1-2019', '04:00:00', '2', 'TRUE');
-INSERT INTO Bids VALUES ('4', '10', '1-1-2019', '01:00:00',  '2', 'TRUE');
-INSERT INTO Bids VALUES ('6', '9', '1-1-2019', '01:00:00',  '2', 'TRUE');
+INSERT INTO Bids VALUES ('1', '10','2019-1-1', '00:00:00', '1');
+INSERT INTO Bids VALUES ('1', '9', '2019-1-1', '00:00:00', '0.5');
+INSERT INTO Bids VALUES ('2', '9', '2019-1-1', '00:00:00', '2');
+INSERT INTO Bids VALUES ('2', '8', '2019-1-1', '00:00:00', '1');
+INSERT INTO Bids VALUES ('3', '8', '2019-1-1', '01:00:00',  '2');
+INSERT INTO Bids VALUES ('4', '7', '2019-12-1', '02:00:00',  '2');
+INSERT INTO Bids VALUES ('5', '6', '2019-12-1', '03:00:00',  '2');
+INSERT INTO Bids VALUES ('6', '5', '2019-12-1', '04:00:00', '2');
+INSERT INTO Bids VALUES ('4', '10','2019-12-1', '01:00:00',  '2');
+INSERT INTO Bids VALUES ('6', '9', '2019-12-1', '01:00:00',  '2');
 
-INSERT INTO Deals VALUES ('1', '10', '1-1-2019', '00:00:00', '1-1-2019', '00:30:00');
-INSERT INTO Deals VALUES ('2', '9', '1-1-2019', '00:00:00', '1-1-2019', '00:30:00');
-INSERT INTO Deals VALUES ('3', '8', '1-1-2019', '01:00:00', '1-1-2019', '01:30:00');
-INSERT INTO Deals VALUES ('4', '7', '1-1-2019', '02:00:00', '1-1-2019', '02:30:00');
-INSERT INTO Deals VALUES ('5', '6', '1-1-2019', '03:00:00', '1-1-2019', '03:30:00');
-INSERT INTO Deals VALUES ('6', '5', '1-1-2019', '04:00:00', '1-1-2019', '04:30:00');
-INSERT INTO Deals VALUES ('4', '10', '1-1-2019', '01:00:00', '1-1-2019', '01:30:00');
-INSERT INTO Deals VALUES ('6', '9', '1-1-2019', '01:00:00', '1-1-2019', '01:30:00');
+INSERT INTO Deals VALUES ('1', '10','2019-1-1', '00:00:00', '00:15:00', '00:30:00');
+INSERT INTO Deals VALUES ('2', '9', '2019-1-1', '00:00:00', '00:15:00', '00:30:00');
+INSERT INTO Deals VALUES ('3', '8', '2019-1-1', '01:00:00', '01:15:00', '01:30:00');
+INSERT INTO Deals VALUES ('4', '7', '2019-12-1', '02:00:00', '02:15:00', '02:30:00');
+INSERT INTO Deals VALUES ('5', '6', '2019-12-1', '03:00:00', '03:15:00', '03:30:00');
+INSERT INTO Deals VALUES ('6', '5', '2019-12-1', '04:00:00', '04:15:00', '04:30:00');
+INSERT INTO Deals VALUES ('4', '10','2019-12-1', '01:00:00', '01:15:00', '01:30:00');
+INSERT INTO Deals VALUES ('6', '9', '2019-12-1', '01:00:00', '01:15:00', '01:30:00');
 
-INSERT INTO Deals VALUES ('1', '10', '1-1-2019', '00:00:00', '1-1-2019', '00:30:00', '1', 'CommentA' );
-INSERT INTO Deals VALUES ('2', '9', '1-1-2019', '00:00:00', '1-1-2019', '00:30:00', '2', 'CommentB');
-INSERT INTO Deals VALUES ('3', '8', '1-1-2019', '01:00:00', '1-1-2019', '01:30:00', '1', 'CommentC');
-INSERT INTO Deals VALUES ('4', '7', '1-1-2019', '02:00:00', '1-1-2019', '02:30:00', '2', 'CommentD');
-INSERT INTO Deals VALUES ('5', '6', '1-1-2019', '03:00:00', '1-1-2019', '03:30:00', '1', 'CommentE');
-INSERT INTO Deals VALUES ('6', '5', '1-1-2019', '04:00:00', '1-1-2019', '04:30:00', '2', 'CommentF');
-INSERT INTO Deals VALUES ('4', '10', '1-1-2019', '01:00:00', '1-1-2019', '01:30:00', '1', 'CommentG');
-INSERT INTO Deals VALUES ('6', '9', '1-1-2019', '01:00:00', '1-1-2019', '01:30:00', '2', 'CommentH');
+INSERT INTO Evaluates VALUES ('1', '10','2019-1-1', '00:00:00', '2019-1-1', '00:30:00', '1', 'CommentA');
+INSERT INTO Evaluates VALUES ('2', '9', '2019-1-1', '00:00:00', '2019-1-1', '00:30:00', '2', 'CommentB');
+INSERT INTO Evaluates VALUES ('3', '8', '2019-1-1', '01:00:00', '2019-1-1', '01:30:00', '1', 'CommentC');
+INSERT INTO Evaluates VALUES ('4', '7', '2019-12-1', '02:00:00', '2019-1-1', '02:30:00', '2', 'CommentD');
+INSERT INTO Evaluates VALUES ('5', '6', '2019-12-1', '03:00:00', '2019-1-1', '03:30:00', '1', 'CommentE');
+INSERT INTO Evaluates VALUES ('6', '5', '2019-12-1', '04:00:00', '2019-1-1', '04:30:00', '2', 'CommentF');
+INSERT INTO Evaluates VALUES ('4', '10','2019-12-1', '01:00:00', '2019-1-1', '01:30:00', '1', 'CommentG');
+INSERT INTO Evaluates VALUES ('6', '9', '2019-12-1', '01:00:00', '2019-1-1', '01:30:00', '2', 'CommentH');
 
---possible TRIGGER 1: update old bid
-CREATE OR REPLACE FUNCTION check_bid ()
-RETURNS TRIGGER AS $$
-	DECLARE count NUMERIC;
-	BEGIN
-	SELECT COUNT(*) INTO count FROM Bids b
-	WHERE NEW.did = b.did AND
-	NEW.pid = b.pid AND
-	NEW.rdate = b.rdate AND
-	NEW.rtime = b.rtime;
-	IF count > 0 THEN 
-	RETURN UPDATE (OLD.did, OLD.pid, OLD.rdate, OLD.rtime, NEW.price);
-	ELSE RETURN NEW;
-	ENDIF;
-	END; 
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER check_update_bid()
-BEFORE INSERT OR UPDATE ON Bids
-EXECUTE PROCEDURE check__bid();
---possible TRIGGER 2: only allow one ride at the same time
-
-CREATE OR REPLACE FUNCTION check_ride() 
-RETURNS TRIGGER AS $$
-DECLARE count NUMERIC;
-BEGIN 
-SELECT COUNT(*) INTO count FROM Rides r
-WHERE NEW.uid = r.uid AND NEW.rdate = r.rdate AND NEW.rtime = r.rtime
-IF count> 0 THEN
-RETURN UPDATE (OLD.uid, OLD.rdate, OLD.rtime, NEW.origin, NEW.destination, NEW.max);
-ELSE RETURN NEW;
-ENDIF;
-END; $$ LANGUAGE plpgsql; 
-
-CREATE TRIGGER check_insert_ride()
-BEFORE INSERT OR UPDATE ON Rides 
-EXECUTE PROCEDURE check_ride();
-
-
---possible TRIGGER 3: 
